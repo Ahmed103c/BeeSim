@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class SimTest 
 {
     /**
      * Rigorous Test :-)
@@ -17,4 +17,6 @@ public class AppTest
     {
         assertTrue( true );
     }
+
+    
 }
