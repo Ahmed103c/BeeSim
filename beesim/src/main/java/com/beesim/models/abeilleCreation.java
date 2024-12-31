@@ -1,5 +1,5 @@
 package com.beesim.models;
 
-public class abeilleCreation {
+public class AbeilleCreation {
     
 }
