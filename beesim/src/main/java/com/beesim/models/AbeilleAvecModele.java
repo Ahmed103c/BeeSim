@@ -8,9 +8,8 @@ public class AbeilleAvecModele extends Abeille{
     private boolean collecteTerminee = false; // Indique si la collecte est terminée
     private int capacite;
 
-    public AbeilleAvecModele(int x, int y, int capacite) {
-        super(x, y, 0); // Le score commence à 0
-        this.capacite = capacite;
+    public AbeilleAvecModele(int x, int y, int score) {
+        super(x, y, score);
     }
 
     // Ajouter une fleur à la mémoire collective
