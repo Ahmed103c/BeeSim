@@ -78,7 +78,8 @@ public class SimFX extends Application {
          * 
          * 
          ************************************************************************/
-        
+        AbeilleFactory abeilleFactory = new AbeilleFactory();
+        Abeille abeilleSansModele_0 = abeilleFactory.creerAbeille("AvecModel",1, 1, 0);
 
 
         // Afficher la scène
