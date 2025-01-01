@@ -31,7 +31,7 @@ public class Ruche {
     public void setScore(int score) {
         this.score = score;
     }
-    public void increaseScore(abeille abeille) {
+    public void increaseScore(Abeille abeille) {
         this.score+=abeille.score;
     }
 }
