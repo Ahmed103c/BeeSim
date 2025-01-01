@@ -1,5 +1,11 @@
 package com.beesim.models;
-
-public class abeille {
-    protected int score;
+import com.beesim.State.*;
+public abstract class Abeille {
+    protected int x;
+    protected int y;
+    protected int capaciteNectarPrise;
+    protected EtatAbeille Etat;
+    // public Abeille(){
+    //     this.Etat=new Repos();
+    // }
 }
