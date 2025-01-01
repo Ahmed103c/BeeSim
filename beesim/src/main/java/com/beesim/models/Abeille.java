@@ -5,14 +5,10 @@ public abstract class Abeille {
     protected int y;
     protected int capaciteNectarPrise;
     protected int score;
-    protected EtatAbeille Etat;
-    // public Abeille(){
-    //     this.Etat=new Repos();
-    // }
-    int getScore(){
-        return score;
-    }
-    void setScore(int score){
+    protected EtatAbeille etatActuel;
+    public Abeille(int x, int y ,int  score){
+        this.x = x;
+        this.y = y;
         this.score = score;
     }
     int getX() {
@@ -33,5 +29,14 @@ public abstract class Abeille {
     void setCapaciteNectarPrise(int capaciteNectarPrise) {
         this.capaciteNectarPrise = capaciteNectarPrise;
     }
+    int getScore(){
+        return score;
+    }
+    void setScore(int score){
+        this.score = score;
+    }
+    public abstract void agir();
+
+
 
 }

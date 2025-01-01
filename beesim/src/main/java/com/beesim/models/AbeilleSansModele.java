@@ -1,12 +1,18 @@
 package com.beesim.models;
-import com.beesim.State.*;
+import com.beesim.State.EtatAbeille;
 
-public class AbeilleSansModele extends Abeille{
-    
-    public AbeilleSansModele() {
-        this.Etat=new Repos();  
+import java.util.HashMap;
+import java.util.Map;
+
+public class AbeilleSansModele extends Abeille {
+
+    public AbeilleSansModele(int x, int y, int score) {
+        super(x, y, score);
+        this.capaciteNectarPrise=20;
+        this.etatActuel=new EtatAbeille();
     }
-    public void getEtat(){
-        this.Etat.donnerEtat();
+    @Override
+    public void agir() {
+        //bah selon les etats
     }
 }
