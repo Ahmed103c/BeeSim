@@ -1,10 +1,22 @@
 package com.beesim.models;
 
 public class Fleur {
-    private int nectar;
     private int x;
     private int y;
     private boolean occupe;
+    private int nectar;
+    private Environnement environnement;
+
+    public Fleur(Environnement environnement,int x,int y,int nectar)
+    {
+        this.environnement=environnement;
+        this.x=x;
+        this.y=y;
+        this.nectar=nectar;
+        this.occupe=false;
+        environnement.set_Couleur_Fleur_Par_Défault(x, y, true);
+    }
+    
 
     public int getX() {
         return x;
