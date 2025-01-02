@@ -1,0 +1,106 @@
+@startuml
+
+' Déclaration des classes principales
+class Main {
+    +start(primaryStage: Stage) : void
+    +update(deltaTime: double) : void
+    +render() : void
+    +renderUI() : void
+    +renderEffects() : void
+    +checkGameOver() : void
+}
+
+class Simulation {
+    -environment : Environment
+    +Simulation(width: int, height: int, initialHumans: int, initialZombies: int)
+    -initializeAgents(humans: int, zombies: int) : void
+    +update(deltaTime: double) : void
+    +getEnvironment() : Environment
+    +getStats() : Stats
+}
+
+class Environment {
+    -agents : List<Agent>
+    -width : int
+    -height : int
+    +Environment(width: int, height: int)
+    +addAgent(agent: Agent) : void
+    +removeAgent(agent: Agent) : void
+    +getAgents() : List<Agent>
+    +getWidth() : int
+    +getHeight() : int
+    +getHumainsVivantCount() : int
+    +getHumainsInfectesCount() : int
+    +getZombiesCount() : int
+    +miseAJour(deltaTime: double) : void
+}
+
+class Agent {
+    -x : double
+    -y : double
+    -vitesse : double
+    -force : double
+    -sante : double
+    -etat : AgentState
+    +Agent(x: double, y: double, vitesse: double, force: double, sante: double)
+    +deplacer(env: Environment) : void
+    +interagir(autre: Agent, env: Environment) : void
+    +distanceTo(autre: Agent) : double
+    +verifierLimites(width: int, height: int) : void
+}
+
+class Human {
+    -tempsInfection : double
+    +Human(x: double, y: double, vitesse: double, force: double, sante: double)
+    +deplacer(env: Environment) : void
+    +interagir(autre: Agent, env: Environment) : void
+    +mettreAJourEtat(deltaTime: double) : void
+}
+
+class Zombie {
+    -type : ZombieType
+    +Zombie(x: double, y: double, vitesse: double, force: double, sante: double, type: ZombieType)
+    +deplacer(env: Environment) : void
+    +interagir(autre: Agent, env: Environment) : void
+}
+
+class Stats {
+    -humainsVivant : int
+    -humainsInfectes : int
+    -zombies : int
+    +Stats(humainsVivant: int, humainsInfectes: int, zombies: int)
+    +getHumainsVivant() : int
+    +getHumainsInfectes() : int
+    +getZombies() : int
+}
+
+class AgentFactory {
+    +createAgent(type: String, x: double, y: double, vitesse: double, force: double, sante: double, zombieType: ZombieType) : Agent
+}
+
+' Enums
+enum AgentState {
+    HEALTHY
+    INFECTED
+    DEAD
+    ZOMBIE
+}
+
+enum ZombieType {
+    NORMAL
+    FAST
+    SLOW
+}
+
+' Relations
+Main --> Simulation : utilise
+Simulation --> Environment : gère
+Environment --> Agent : contient *
+Agent <|-- Human : hérite
+Agent <|-- Zombie : hérite
+Simulation --> Stats : génère
+Human --> AgentState : utilise
+Zombie --> ZombieType : utilise
+AgentFactory --> Agent : crée
+
+@enduml

@@ -1,4 +1,5 @@
 package com.beesim.models;
+import com.beesim.SimFX;
 import java.util.*;
 import com.beesim.State.EtatAbeille;
 
@@ -6,6 +7,7 @@ public class AbeilleAvecModele extends Abeille{
     private static HashMap<String, Fleur> memoireCollective = new HashMap<>();
     private boolean rechercheTerminee = false; // Indique si la recherche est terminée
     private boolean collecteTerminee = false; // Indique si la collecte est terminée
+    private Environnement environnement;
     private int capacite;
 
     public AbeilleAvecModele(int x, int y, int capacite) {
@@ -38,6 +40,7 @@ public class AbeilleAvecModele extends Abeille{
                     this.y = j;
 
                     // Simuler la découverte d'une fleur
+
                     Fleur fleur = environnementSimule(i, j);
                     if (fleur != null && !fleur.estVide()) {
                         ajouterFleurMemoire(fleur);
@@ -87,6 +90,10 @@ public class AbeilleAvecModele extends Abeille{
             System.out.println("Collecte terminée : " + nectarCollecte + " nectar pris à " + cle);
         }
         collecteTerminee = true;
+    }
+    private Fleur environnementSimule(int x, int y) {
+        // Retourne une fleur si elle existe à la position (x, y), sinon null
+        return environnement.getFleur(x, y);
     }
     @Override
     public void agir() {
