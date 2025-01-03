@@ -28,23 +28,49 @@ public class Environnement {
             }
         }
     }
-    // Couleur par Défaut des fleurs :
-    // public void set_Couleur_Fleur_Par_Défault(int x, int y, boolean occupe) {
-    //     if (x >= 0 && x < rows && y >= 0 && y < cols) {
-    //         cells[x][y].setFill(occupe ? Color.RED : Color.LIGHTGRAY);
-    //     }
-    // }
-
-    public void set_Couleur_Fleur_Par_Défault(int x, int y, boolean occupe) {
-    if (x >= 0 && x < rows && y >= 0 && y < cols) {
-        if (occupe) {
-            // Charger l'image de fleur
-            Image fleurImage = new Image(getClass().getResource("fleur.png").toExternalForm()); // Assurez-vous que l'image est accessible depuis le chemin
-            cells[x][y].setFill(new ImagePattern(fleurImage)); // Appliquer l'image comme motif
-        } else {
-            cells[x][y].setFill(Color.LIGHTGRAY); // Couleur par défaut si pas de fleur
+    public void set_Couleur_Fleur_Par_Défault(int x, int y, boolean occupe) 
+    {
+        if (x >= 0 && x < rows && y >= 0 && y < cols) 
+        {
+            if (occupe) {
+                // Charger l'image de fleur
+                Image fleurImage = new Image(getClass().getResource("fleur.png").toExternalForm()); // Assurez-vous que l'image est accessible depuis le chemin
+                cells[x][y].setFill(new ImagePattern(fleurImage)); // Appliquer l'image comme motif
+            } else {
+                cells[x][y].setFill(Color.LIGHTGRAY); // Couleur par défaut si pas de fleur
+            }
         }
     }
+    public void set_Abeille_Sans_Modèle_Par_Défaults(int x,int y,boolean occupe)
+    {
+        if (x >= 0 && x < rows && y >= 0 && y < cols) 
+        {
+            if (occupe) {
+                // Charger l'image de fleur
+                Image abeilleImage = new Image(getClass().getResource("bee.png").toExternalForm()); // Assurez-vous que l'image est accessible depuis le chemin
+                cells[x][y].setFill(new ImagePattern(abeilleImage)); // Appliquer l'image comme motif
+            } else {
+                System.out.println("Erreur dans la position de la fleur");
+                cells[x][y].setFill(Color.LIGHTGRAY); // Couleur par défaut si pas de fleur
+            }
+        }
+    }
+
+    public void mettreAJourCellule_Abeille(int x, int y, boolean occupe)
+    {
+        if (x >= 0 && x < rows && y >= 0 && y < cols) {
+            // cells[x][y].setFill(occupe ? Color.YELLOW : Color.LIGHTGRAY);
+            if (occupe) {
+                Image abeilleImage = new Image(getClass().getResource("bee.png").toExternalForm()); // Assurez-vous que l'image est accessible depuis le chemin
+                cells[x][y].setFill(new ImagePattern(abeilleImage)); // Appliquer l'image comme motif
+            }
+            else
+            {
+                cells[x][y].setFill(Color.LIGHTGRAY);
+            }
+        }
+    }
+
 }
 
 
@@ -53,5 +79,5 @@ public class Environnement {
 
 
 
-}
+
 

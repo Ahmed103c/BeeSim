@@ -5,11 +5,11 @@ public class Fleur {
     private int y;
     private boolean occupe;
     private int nectar;
-    private Environnement environnement;
+    //private Environnement environnement;
 
     public Fleur(Environnement environnement,int x,int y,int nectar)
     {
-        this.environnement=environnement;
+        //this.environnement=environnement;
         this.x=x;
         this.y=y;
         this.nectar=nectar;

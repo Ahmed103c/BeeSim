@@ -78,9 +78,17 @@ public class SimFX extends Application {
          * 
          * 
          ************************************************************************/
-        AbeilleFactory abeilleFactory = new AbeilleFactory();
-        Abeille abeilleSansModele_0 = abeilleFactory.creerAbeille("AvecModel",1, 1, 0);
-
+        // AbeilleSansModele AbeilleSansModele_0 =new AbeilleSansModele(grille,1,1,0);
+        AbeilleSansModele AbeilleSansModele_1 =new AbeilleSansModele(grille,15,15,0);
+        
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), event -> {
+            // AbeilleSansModele_0.deplacer(); // Déplace l'abeille
+            AbeilleSansModele_1.deplacer(); 
+        }));
+        
+        timeline.setCycleCount(Timeline.INDEFINITE); // Boucle infinie
+        timeline.play();
+    
 
         // Afficher la scène
         Scene scene = new Scene(gridPane, 825, 825);
