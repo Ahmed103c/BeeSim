@@ -7,14 +7,13 @@ public class Fleur {
     private int nectar;
     //private Environnement environnement;
 
-    public Fleur(Environnement environnement,int x,int y,int nectar)
+    public Fleur(int x,int y,int nectar)
     {
         //this.environnement=environnement;
         this.x=x;
         this.y=y;
         this.nectar=nectar;
         this.occupe=false;
-        environnement.set_Couleur_Fleur_Par_Défault(x, y, true);
     }
     
 
