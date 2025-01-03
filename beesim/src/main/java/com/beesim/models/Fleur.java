@@ -5,19 +5,14 @@ public class Fleur {
     private int y;
     private boolean occupe;
     private int nectar;
-    private Environnement environnement;
-
-    public Fleur(Environnement environnement,int x,int y,int nectar)
+    
+    public Fleur(int x,int y,int nectar)
     {
-        this.environnement=environnement;
         this.x=x;
         this.y=y;
         this.nectar=nectar;
         this.occupe=false;
-        environnement.set_Couleur_Fleur_Par_Défault(x, y, true);
     }
-    
-
     public int getX() {
         return x;
     }
@@ -42,11 +37,17 @@ public class Fleur {
     public boolean isOccupe() {
         return occupe;
     }
-    public void nectarModification{
-        
+    public void reduireNectar(int quantite) {
+        if (!occupe && quantite <= nectar) {
+            this.nectar -= quantite;
+            if (this.nectar <= 0) {
+                this.nectar = 0;
+                this.occupe = true; 
+            }
+        }
     }
-    /*il faut ajouter les fonction d'occupation*/
-
-
-
+    @Override
+    public String toString() {
+        return "Fleur [x=" + x + ", y=" + y + ", nectar=" + nectar + ", estAccessible=" + !occupe + "]";
+    }
 }

@@ -4,11 +4,13 @@ public abstract class Abeille {
     protected int x;
     protected int y;
     protected int capaciteNectarPrise;
-    protected int nectarTransporte;
-    protected int energie;
     protected Ruche ruche;
+    protected int nectarTransporte;
+    protected int energie;    
     protected EtatAbeille etatActuel;
-    public Abeille(int x, int y ,int  capaciteNectarPrise ,Ruche ruche){
+
+
+    public Abeille(int x, int y ,int  capaciteNectarPrise ,Ruche ruche) {
         this.x = x;
         this.y = y;
         this.capaciteNectarPrise = capaciteNectarPrise;
@@ -17,11 +19,9 @@ public abstract class Abeille {
         this.ruche = ruche;
         this.etatActuel=new ChercherNectar();
     }
-    public void agir(){
+    public void agir()
+    {
         etatActuel.agir(this);
-    }
-    public void setEtat(EtatAbeille nouvelEtat) {
-        this.etatActuel = nouvelEtat;
     }
     public void seDeplacerVers(int cibleX, int cibleY) {
         while (x != cibleX || y != cibleY) {
@@ -34,6 +34,10 @@ public abstract class Abeille {
             energie--; // Réduire l'énergie pour chaque déplacement
         }
     }
+    public abstract void aller();
+    public abstract void retour();
+    //public  boolean estSurFleur();
+
     public void ajouterNectarTransporté(int quantité) {
         nectarTransporte += quantité;
     }
@@ -45,22 +49,27 @@ public abstract class Abeille {
     }
     public abstract Fleur choisirFleur();
     public abstract Fleur choisirFleurPourCollecte();
-    public int getX() {
+    public EtatAbeille getEtat()
+    {
+        return etatActuel;
+    }
+
+    int getX() {
         return x;
     }
-    public void setX(int x) {
+    void setX(int x) {
         this.x = x;
     }
-    public int getY() {
+    int getY() {
         return y;
     }
-    public void setY(int y) {
+    void setY(int y) {
         this.y = y;
     }
-    public int getCapaciteNectarPrise() {
+    int getCapaciteNectarPrise() {
         return capaciteNectarPrise;
     }
-    public void setCapaciteNectarPrise(int capaciteNectarPrise) {
+    void setCapaciteNectarPrise(int capaciteNectarPrise) {
         this.capaciteNectarPrise = capaciteNectarPrise;
     }
     public int getEnergie() {
