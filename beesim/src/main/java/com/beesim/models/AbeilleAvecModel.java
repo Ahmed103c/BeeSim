@@ -6,10 +6,12 @@ import java.util.*;
 public class AbeilleAvecModel extends Abeille {
     private static Map<String, Fleur> memoireCollective = new HashMap<>(); // Mémoire partagée entre abeilles avec modèle
     private Map<Fleur, Integer> modeleInterne; // Mémoire individuelle de l'abeille
-    public AbeilleAvecModel(int x, int y, int capaciteNectarPrise, Ruche ruche , BeeEnvironement environnement) {
-        super(x, y, capaciteNectarPrise, ruche, environnement);
+
+    public AbeilleAvecModel(int x, int y, Ruche ruche, Environnement environnement) {
+        super(x, y, ruche, environnement);
         this.modeleInterne = new HashMap<>();
     }
+
     /**
      * Implémentation de la méthode abstraite `choisirFleur`.
      * Cette méthode est utilisée pour choisir une fleur lors de la recherche de nectar.
@@ -64,13 +66,19 @@ public class AbeilleAvecModel extends Abeille {
      */
     public void rechercherNectar(int tailleGrille, boolean partieSuperieure) {
         int limite = tailleGrille / 2;
+        Environnement environnement = getEnvironnement(); // Récupère l'environnement depuis la classe parent
+
+        if (environnement == null) {
+            System.out.println("Erreur : aucun environnement associé à l'abeille.");
+            return;
+        }
 
         // Déplacement dans la grille selon la zone attribuée
         if (partieSuperieure) {
             for (int i = 0; i < limite; i++) {
                 for (int j = 0; j < tailleGrille; j++) {
                     seDeplacerVers(i, j);
-                    Fleur fleur = environnementSimule(i, j);
+                    Fleur fleur = environnement.environnementSimule(i, j);
                     if (fleur != null && fleur.getNectar() > 0) {
                         ajouterFleurMemoireCollective(fleur);
                         modeleInterne.put(fleur, fleur.getNectar());
@@ -81,7 +89,7 @@ public class AbeilleAvecModel extends Abeille {
             for (int i = limite; i < tailleGrille; i++) {
                 for (int j = tailleGrille - 1; j >= 0; j--) {
                     seDeplacerVers(i, j);
-                    Fleur fleur = environnementSimule(i, j);
+                    Fleur fleur = environnement.environnementSimule(i, j);
                     if (fleur != null && fleur.getNectar() > 0) {
                         ajouterFleurMemoireCollective(fleur);
                         modeleInterne.put(fleur, fleur.getNectar());
@@ -89,7 +97,7 @@ public class AbeilleAvecModel extends Abeille {
                 }
             }
         }
-        setEtat(new RetourRuche()); // Change l'état après la recherche
+        setEtatActuel(new RetourRuche()); // Change l'état après la recherche
     }
 
     /**
@@ -100,15 +108,15 @@ public class AbeilleAvecModel extends Abeille {
 
         if (fleursTriees.isEmpty()) {
             System.out.println("Aucune fleur disponible pour la collecte.");
-            setEtat(new Repos()); // Passe en repos si aucune fleur
+            setEtatActuel(new Repos()); // Passe en repos si aucune fleur
             return;
         }
 
-        // Sélectionne une fleur basée sur la mémoire collective
-        Fleur cible = fleursTriees.get(0); // La fleur avec le plus de nectar
+        setEtatActuel(new CollecterNectar());
+        Fleur cible = fleursTriees.get(0); // Fleur avec le plus de nectar
         seDeplacerVers(cible.getX(), cible.getY());
 
-        int nectarCollecte = Math.min(cible.getNectar(), capaciteNectarPrise);
+        int nectarCollecte = Math.min(cible.getNectar(), getCapaciteNectarPrise());
         cible.reduireNectar(nectarCollecte);
         ajouterNectarTransporté(nectarCollecte);
 
@@ -122,19 +130,19 @@ public class AbeilleAvecModel extends Abeille {
         }
 
         System.out.println("Collecte de " + nectarCollecte + " nectar sur la fleur à " + cle);
-        setEtat(new RetourRuche()); // Retourne à la ruche après la collecte
+        setEtatActuel(new RetourRuche()); // Retourne à la ruche après la collecte
     }
 
     /**
      * Retourne l'abeille à la ruche pour vider le nectar collecté.
      */
     public void retournerALaRuche() {
-        seDeplacerVers(ruche.getPositionX(), ruche.getPositionY());
-        int nectar=getNectarTransporté();
-        ruche.ajouterNectar(nectar);
+        seDeplacerVers(getRuche().getPositionX(), getRuche().getPositionY());
+        int nectar = getNectarTransporté();
+        getRuche().ajouterNectar(nectar);
         viderNectarTransporté();
         System.out.println("Abeille retournée à la ruche et nectar vidé.");
-        setEtat(new Repos()); // Passe en état de repos après dépôt
+        setEtatActuel(new Repos()); // Passe en état de repos après dépôt
     }
 
     /**
@@ -155,23 +163,10 @@ public class AbeilleAvecModel extends Abeille {
     public void agir() {
         etatActuel.agir(this);
     }
-
-    public Fleur environnementSimule(int x, int y) {
-        // Récupère la liste des fleurs dans l'environnement
-        List<Fleur> fleurs = environement.getFleurs();
-
-        // Recherche une fleur dans la liste en fonction des coordonnées
-        for (Fleur fleur : fleurs) {
-            if (fleur.getX() == x && fleur.getY() == y) {
-                return fleur; // Retourne la fleur si les coordonnées correspondent
-            }
-        }
-
-        // Si aucune fleur n'est trouvée, retourne null
-        return null;
+    @Override
+    public void retour(){
+        seDeplacerVers(0,0);
     }
-
-
     public static Map<String, Fleur> getMemoireCollective() {
         return memoireCollective;
     }

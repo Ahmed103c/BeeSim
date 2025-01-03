@@ -6,15 +6,24 @@ public abstract class Abeille {
     protected int capaciteNectarPrise;
     protected Ruche ruche;
     protected int nectarTransporte;
-    protected int energie;    
+    protected int energie;
     protected EtatAbeille etatActuel;
+    private Environnement environnement;
+
+    public Environnement getEnvironnement() {
+        return environnement;
+    }
+    public void setEnvironnement(Environnement environnement) {
+        this.environnement = environnement;
+    }
 
 
-    public Abeille(int x, int y ,int  capaciteNectarPrise ,Ruche ruche) {
+    public Abeille(int x, int y ,Ruche ruche,Environnement environnement) {
         this.x = x;
         this.y = y;
-        this.capaciteNectarPrise = capaciteNectarPrise;
+        this.environnement = environnement;
         this.energie = 100;
+        this.capaciteNectarPrise = 30;
         this.nectarTransporte=0;
         this.ruche = ruche;
         this.etatActuel=new ChercherNectar();
@@ -34,7 +43,6 @@ public abstract class Abeille {
             energie--; // Réduire l'énergie pour chaque déplacement
         }
     }
-    public abstract void aller();
     public abstract void retour();
     //public  boolean estSurFleur();
 
@@ -83,4 +91,11 @@ public abstract class Abeille {
     public Ruche getRuche() {
         return ruche;
     }
+    public void setEtatActuel(EtatAbeille etatActuel) {
+        this.etatActuel = etatActuel;
+    }
+    public boolean estDansLimites(int x, int y) {
+        return x >= 0 && x < environnement.getRows() && y >= 0 && y < environnement.getCols();
+    }
+
 }

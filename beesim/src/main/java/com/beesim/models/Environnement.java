@@ -39,7 +39,19 @@ public class Environnement {
             }
         }
     }
-
+    public int getRows() {
+        return rows;
+    }
+    public int getCols() {
+        return cols;
+    }
+    public Fleur environnementSimule(int x, int y) {
+        // Vérifie si les coordonnées sont dans les limites de la matrice
+        if (x >= 0 && x < matriceFleur.length && y >= 0 && y < matriceFleur[0].length) {
+            return matriceFleur[x][y]; // Retourne la fleur si elle existe, sinon retourne null
+        }
+        return null; // Coordonnées hors limites
+    }
 
     /*************************************************************************
      * 
