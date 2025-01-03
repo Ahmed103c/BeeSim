@@ -15,40 +15,32 @@ public class Environnement {
     private int rows;
     private int cols;
     Rectangle[][] cells;
-    private Fleur[][] cellscontent;
-    private List<Fleur> fleurFixes;
+    private Fleur[][] matriceFleur;
+    private List<Fleur> fleurs;
+    private List<Ruche> ruches;
 
-    Image fleurImage2 = new Image(getClass().getResource("fleur.png").toExternalForm());
     public Environnement(int rows, int cols, GridPane gridPane) 
     {
         this.rows = rows;
         this.cols = cols;
         this.cells = new Rectangle[rows][cols];
-        this.cellscontent = new Fleur[rows+1][cols+1];
-
+        this.matriceFleur = new Fleur[rows+1][cols+1];
+        this.fleurs=new ArrayList<>();
+        this.ruches=new ArrayList<>();
+        initialiserRuches();
         // Initialisation des cellules de la grille :
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 Rectangle cell = new Rectangle(40, 40, Color.LIGHTGRAY); // Taille et couleur initiale
                 cell.setStroke(Color.BLACK);                             // Bordure des cellules
                 cells[i][j] = cell;
-                cellscontent[i][j]=null;
+                matriceFleur[i][j]=null;
                 gridPane.add(cell, j, i);                                // Ajout à la grille graphique
             }
         }
     }
-    public Fleur getCell(int x,int y)
-    {
-        return cellscontent[x][y];
-    }
-    public boolean getCellBool(int x,int y)
-    {
-        boolean resultat =true;
-        if (getCell(x,y)==null) {
-            resultat=false;
-        }
-        return resultat;
-    }
+
+
     /*************************************************************************
      * 
      * 
@@ -59,7 +51,7 @@ public class Environnement {
      * 
      * 
      ***********************************************************************/
-    public List<Fleur> genererFleurs() {
+    public List<Fleur> getFleurs() {
         List<Fleur> Fleurs = new ArrayList<>();
         Set<String> usedPositions = new HashSet<>(); 
         Random random = new Random();
@@ -76,10 +68,22 @@ public class Environnement {
                 usedPositions.add(position); 
                 Fleurs.add(new Fleur(x, y, 10));  
                 System.out.println("Fleur ajoutée en : (" + x + ", " + y + ")");
-                cellscontent[x][y] = new Fleur(x, y, 10);  
+                matriceFleur[x][y] = new Fleur(x, y, 10);  
             }
         }
         return Fleurs;
+    }
+    public Fleur getCell(int x,int y)
+    {
+        return matriceFleur[x][y];
+    }
+    public boolean getCellBool(int x,int y)
+    {
+        boolean resultat =true;
+        if (getCell(x,y)==null) {
+            resultat=false;
+        }
+        return resultat;
     }
     public void set_Couleur_Fleur_Par_Défault(int x, int y, boolean occupe) 
         {
@@ -96,22 +100,39 @@ public class Environnement {
         }
     public void DessinerFleur()
     {
-        fleurFixes =this.genererFleurs();
-        for (Fleur fleur : fleurFixes) {
+        fleurs =this.getFleurs();
+        for (Fleur fleur : fleurs) {
             System.out.println("Fleur ajoutée en : (" + fleur.getX() + ", " + fleur.getY() + ")");
             this.set_Couleur_Fleur_Par_Défault(fleur.getX(), fleur.getY(), true);
         }
-    }    
+    }   
+        /*************************************************************************
+     * 
+     * 
+     * 
+     *              Création des Fleurs et Ruches 
+     * 
+     * 
+     * 
+     * 
+     ***********************************************************************/
+    public void initialiserRuches() {
+        Set<String> positions = new HashSet<>();
+        int x = 0, y = 0;
+        int x2 = rows-1, y2 = cols-1;
+        positions.add(x + "," + y);
+        positions.add(x2 + "," + y2);
+        ruches.add(new Ruche(x, y));
+        ruches.add(new Ruche(x2, y2)); //il faut voir avec chatGPt une autre fois putain
+    }
     
-
-
 
 
     /*************************************************************************
      * 
      * 
      * 
-     *              Gestion des Abeilles 
+     *              Dessiner  les Abeilles 
      * 
      * 
      * 

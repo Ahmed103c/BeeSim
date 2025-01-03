@@ -52,8 +52,9 @@ public class SimFX extends Application {
          * 
          * 
          * 
-         ************************************************************************/    
-        AbeilleSansModele AbeilleSansModele_1 =new AbeilleSansModele(grille,0,0,0);
+         ************************************************************************/  
+        Ruche ruche = new Ruche(0, 210);  
+        AbeilleSansModele AbeilleSansModele_1 =new AbeilleSansModele(grille,0,0,0,ruche);
         System.out.println(AbeilleSansModele_1.getEtat());
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), event -> {
             AbeilleSansModele_1.deplacer(); 

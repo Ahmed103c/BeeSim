@@ -5,11 +5,10 @@ public class Fleur {
     private int y;
     private boolean occupe;
     private int nectar;
-    //private Environnement environnement;
+    
 
     public Fleur(int x,int y,int nectar)
     {
-        //this.environnement=environnement;
         this.x=x;
         this.y=y;
         this.nectar=nectar;
@@ -40,6 +39,19 @@ public class Fleur {
     }
     public boolean isOccupe() {
         return occupe;
+    }
+    public void reduireNectar(int quantite) {
+        if (!occupe && quantite <= nectar) {
+            this.nectar -= quantite;
+            if (this.nectar <= 0) {
+                this.nectar = 0;
+                this.occupe = true; // La fleur devient inaccessible si tout le nectar est collecté
+            }
+        }
+    }
+    @Override
+    public String toString() {
+        return "Fleur [x=" + x + ", y=" + y + ", nectar=" + nectar + ", estAccessible=" + !occupe + "]";
     }
     /*il faut ajouter les fonction d'occupation*/
 

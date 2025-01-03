@@ -16,8 +16,8 @@ public class AbeilleSansModele extends Abeille {
     private Environnement environnement;
 
    
-    public AbeilleSansModele(Environnement environnement,int x, int y, int score) {
-        super(x, y, score);
+    public AbeilleSansModele(Environnement environnement,int x, int y, int capaciteNectarPrise ,Ruche rucha) {
+        super(x, y,capaciteNectarPrise,rucha);
         this.environnement=environnement;
         environnement.set_Abeille_Sans_Modèle_Par_Défaults(x, y, true);
     }
@@ -45,3 +45,6 @@ public class AbeilleSansModele extends Abeille {
         }
     }
 }
+
+
+// utiliser min entre capacite abeille et quantite nectar dans fleur 
