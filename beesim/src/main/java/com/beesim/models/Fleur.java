@@ -42,6 +42,9 @@ public class Fleur {
     public boolean isOccupe() {
         return occupe;
     }
+    public void nectarModification{
+        
+    }
     /*il faut ajouter les fonction d'occupation*/
 
 
