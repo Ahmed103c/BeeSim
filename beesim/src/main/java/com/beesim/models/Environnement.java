@@ -123,8 +123,8 @@ public class Environnement {
         int x2 = rows-2, y2 = cols-2;
         positions.add(x + "," + y);
         positions.add(x2 + "," + y2);
-        ruches.add(new Ruche(x, y));
-        ruches.add(new Ruche(x2, y2)); //il faut voir avec chatGPt une autre fois putain
+        ruches.add(new Ruche(x, y,0));
+        ruches.add(new Ruche(x2, y2,0)); //il faut voir avec chatGPt une autre fois putain
     }
     public List<Ruche> getRuches()
     {
