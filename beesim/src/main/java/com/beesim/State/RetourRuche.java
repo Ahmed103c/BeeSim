@@ -4,7 +4,6 @@ import com.beesim.models.Abeille;
 
 public class RetourRuche extends EtatAbeille{
     /*
-    * 
     @Override
     public void agir(Abeille abeille) {
         System.out.println("L'abeille retourne à la ruche.");

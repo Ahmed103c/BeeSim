@@ -34,8 +34,8 @@ public abstract class Abeille {
             energie--; // Réduire l'énergie pour chaque déplacement
         }
     }
-    public abstract void aller();
-    public abstract void retour();
+    //public abstract void aller();
+    //public abstract void retour();
     //public  boolean estSurFleur();
 
     public void ajouterNectarTransporté(int quantité) {
@@ -47,8 +47,8 @@ public abstract class Abeille {
     public void rechargerEnergie() {
         energie = 100;
     }
-    public abstract Fleur choisirFleur();
-    public abstract Fleur choisirFleurPourCollecte();
+    //public abstract Fleur choisirFleur();
+    //public abstract Fleur choisirFleurPourCollecte();
     public EtatAbeille getEtat()
     {
         return etatActuel;
