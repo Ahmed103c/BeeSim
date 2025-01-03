@@ -59,37 +59,25 @@ public class Environnement {
      * 
      * 
      ***********************************************************************/
-    public List<Integer> getFleur_X()
-    {
-        Set<Integer> liste_X_Fleur_Set = new HashSet<>();
-        Random random = new Random();
-        while (liste_X_Fleur_Set.size() < 10) {
-            int num = random.nextInt(10) + 1;
-            liste_X_Fleur_Set.add(num);
-        }
-        List<Integer> liste_X_Fleur =new ArrayList<>(liste_X_Fleur_Set);
-        return liste_X_Fleur;
-    }
-    public List<Integer> getFleur_Y()
-    {
-        Set<Integer> liste_Y_Fleur_Set = new HashSet<>();
-        Random random2 = new Random();
-        while (liste_Y_Fleur_Set.size() < 10) {
-            int num = random2.nextInt(10) + 1;
-            liste_Y_Fleur_Set.add(num);
-        }
-        List<Integer> liste_X_Fleur =new ArrayList<>(liste_Y_Fleur_Set);
-        return liste_X_Fleur;
-    }
-    public List<Fleur> ListeFleur()
-    {
-
+    public List<Fleur> genererFleurs() {
         List<Fleur> Fleurs = new ArrayList<>();
-        for (int index = 0; index < this.getFleur_X().size(); index++) {
-            Fleur fleur = new Fleur(this.getFleur_X().get(index), this.getFleur_Y().get(index),10);
-            System.out.println("X : "+fleur.getX()+" Y : "+fleur.getY());
-            cellscontent[fleur.getX()][fleur.getY()]=fleur;
-            Fleurs.add(fleur);
+        Set<String> usedPositions = new HashSet<>(); 
+        Random random = new Random();
+
+        // Générer 10 positions uniques
+        while (Fleurs.size() < 10) {
+            int x = random.nextInt(10) + 1; 
+            int y = random.nextInt(10) + 1; 
+         
+            String position = x + "," + y;
+
+            // Vérifier si cette position est déjà utilisée
+            if (!usedPositions.contains(position)) {
+                usedPositions.add(position); 
+                Fleurs.add(new Fleur(x, y, 10));  
+                System.out.println("Fleur ajoutée en : (" + x + ", " + y + ")");
+                cellscontent[x][y] = new Fleur(x, y, 10);  
+            }
         }
         return Fleurs;
     }
@@ -100,20 +88,25 @@ public class Environnement {
                 if (occupe) {
                     // Charger l'image de fleur
                     Image fleurImage = new Image(getClass().getResource("fleur.png").toExternalForm()); // Assurez-vous que l'image est accessible depuis le chemin
-                    cells[x][y].setFill(new ImagePattern(fleurImage)); // Appliquer l'image comme motif
+                    cells[x][y].setFill(new ImagePattern(fleurImage));                                  // Appliquer l'image comme motif
                 } else {
-                    cells[x][y].setFill(Color.LIGHTGRAY); // Couleur par défaut si pas de fleur
+                    cells[x][y].setFill(Color.LIGHTGRAY);                                               // Couleur par défaut si pas de fleur
                 }
             }
         }
     public void DessinerFleur()
     {
-        fleurFixes =this.ListeFleur();
+        fleurFixes =this.genererFleurs();
         for (Fleur fleur : fleurFixes) {
             System.out.println("Fleur ajoutée en : (" + fleur.getX() + ", " + fleur.getY() + ")");
             this.set_Couleur_Fleur_Par_Défault(fleur.getX(), fleur.getY(), true);
         }
     }    
+    
+
+
+
+
     /*************************************************************************
      * 
      * 
@@ -124,7 +117,6 @@ public class Environnement {
      * 
      * 
      ***********************************************************************/
-    
     public void set_Abeille_Sans_Modèle_Par_Défaults(int x,int y,boolean occupe)
     {
         if (x >= 0 && x < rows && y >= 0 && y < cols) 
@@ -139,7 +131,6 @@ public class Environnement {
             }
         }
     }
-
     public void mettreAJourCellule_Abeille(int x, int y, boolean occupe)
     {
         if (x >= 0 && x < rows && y >= 0 && y < cols) {
