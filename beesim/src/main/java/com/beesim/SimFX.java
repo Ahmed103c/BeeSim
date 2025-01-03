@@ -67,11 +67,13 @@ public class SimFX extends Application {
          * 
          ************************************************************************/  
         
-        AbeilleSansModele AbeilleSansModele_1 =new AbeilleSansModele(grille,2,1,0,rucheSansModele);
-        AbeilleSansModele AbeilleSansModele_2 =new AbeilleSansModele(grille,2,2,0,rucheSansModele);
+        AbeilleSansModele AbeilleSansModele_1 =new AbeilleSansModele(grille,2,1,25,rucheSansModele);
+        AbeilleSansModele AbeilleSansModele_2 =new AbeilleSansModele(grille,2,2,25,rucheSansModele);
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), event -> {
             AbeilleSansModele_1.deplacer(); 
             AbeilleSansModele_2.deplacer();
+            System.out.println("Nectar sur l'abeille 0 : "+AbeilleSansModele_1.getNectarTransporté());
+            System.out.println("Nectar sur l'abeille 1 : "+AbeilleSansModele_2.getNectarTransporté());
         }));  
         timeline.setCycleCount(Timeline.INDEFINITE); // Boucle infinie
         timeline.play();

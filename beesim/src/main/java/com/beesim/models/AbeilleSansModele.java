@@ -22,6 +22,13 @@ public class AbeilleSansModele extends Abeille {
         environnement.set_Abeille_Sans_Modèle_Par_Défaults(x, y, true);
     }
 
+public void collecterNectar(Fleur fleur)
+{
+        int nectarCollecte = Math.min(fleur.getNectar(), this.getCapaciteNectarPrise());
+        fleur.reduireNectar(nectarCollecte);
+        this.ajouterNectarTransporté(nectarCollecte);
+}
+
 public void deplacer() {
     Random random = new Random();
     int newX = x;
@@ -42,7 +49,13 @@ public void deplacer() {
 
         tentatives++; 
     }
-
+    
+    //ce code permet de retourner false si l'abeille quitte la fleur
+    if (environnement.getCellBool(x, y))
+    {
+        Fleur fleur = environnement.getCell(x, y);
+        fleur.setOccupe(false);
+    }
     
     if (positionValide) {
         environnement.mettreAJourCellule_Abeille(x, y, false);      // Vide l'ancienne position
@@ -51,10 +64,13 @@ public void deplacer() {
 
         // Vérifie si la nouvelle position contient une fleur
         if (environnement.getCellBool(x, y)) {
-            System.out.println("Abeille est sur une fleur ");
+            // System.out.println("Abeille est sur une fleur ");
+            Fleur fleur = environnement.getCell(x, y);
+            fleur.setOccupe(true);
+            this.collecterNectar(fleur);
         }
 
-        System.out.println("Abeille déplacée à : (" + x + ", " + y + ")");
+        // System.out.println("Abeille déplacée à : (" + x + ", " + y + ")");
         environnement.mettreAJourCellule_Abeille(x, y, true);     // Remplit la nouvelle position
     } else {
         System.out.println("Aucune position valide trouvée pour l'abeille après " + tentatives + " tentatives.");

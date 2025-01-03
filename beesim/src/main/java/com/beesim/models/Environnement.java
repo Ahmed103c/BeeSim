@@ -67,7 +67,7 @@ public class Environnement {
             // Vérifier si cette position est déjà utilisée
             if (!usedPositions.contains(position)) {
                 usedPositions.add(position); 
-                Fleurs.add(new Fleur(x, y, 10));  
+                Fleurs.add(new Fleur(x, y, 50));  
                 System.out.println("Fleur ajoutée en : (" + x + ", " + y + ")");
                 matriceFleur[x][y] = new Fleur(x, y, 10);  
             }

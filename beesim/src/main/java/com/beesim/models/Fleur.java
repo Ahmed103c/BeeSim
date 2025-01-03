@@ -37,6 +37,10 @@ public class Fleur {
     public boolean estVide(){
         return  nectar==0;
     }
+    public void setOccupe(boolean occup)
+    {
+        this.occupe=occup;
+    }
     public boolean isOccupe() {
         return occupe;
     }
