@@ -36,7 +36,7 @@ public class SimFX extends Application {
          * 
          * 
          * 
-         *                Création les fleurs dans l'environnement 
+         *                Création des fleurs dans l'environnement 
          * 
          * 
          * 
@@ -47,20 +47,35 @@ public class SimFX extends Application {
          * 
          * 
          * 
+         *                Création des ruches dans l'environnement 
+         * 
+         * 
+         * 
+         * 
+         ************************************************************************/
+        Ruche rucheSansModele=grille.getRuches().get(0);
+        Ruche rucheAvecModele=grille.getRuches().get(1);
+        grille.DessinerRuche(gridPane);
+        /************************************************************************
+         * 
+         * 
+         * 
          *                Gestion des abeilles ; 
          * 
          * 
          * 
          * 
          ************************************************************************/  
-        Ruche ruche = new Ruche(0, 210);  
-        AbeilleSansModele AbeilleSansModele_1 =new AbeilleSansModele(grille,0,0,0,ruche);
-        System.out.println(AbeilleSansModele_1.getEtat());
+        
+        AbeilleSansModele AbeilleSansModele_1 =new AbeilleSansModele(grille,2,1,0,rucheSansModele);
+        AbeilleSansModele AbeilleSansModele_2 =new AbeilleSansModele(grille,2,2,0,rucheSansModele);
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), event -> {
             AbeilleSansModele_1.deplacer(); 
+            AbeilleSansModele_2.deplacer();
         }));  
         timeline.setCycleCount(Timeline.INDEFINITE); // Boucle infinie
         timeline.play();
+
         // Afficher la scène
         Scene scene = new Scene(gridPane, 825, 825);
         primaryStage.setTitle("Simulation d'abeille 2D");

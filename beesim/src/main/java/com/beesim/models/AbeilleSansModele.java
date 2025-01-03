@@ -22,29 +22,44 @@ public class AbeilleSansModele extends Abeille {
         environnement.set_Abeille_Sans_Modèle_Par_Défaults(x, y, true);
     }
 
-    
-    public void deplacer() {
+public void deplacer() {
     Random random = new Random();
-    int newX = x + random.nextInt(3) - 1; // Mouvement aléatoire entre -1 et +1
-    int newY = y + random.nextInt(3) - 1;
+    int newX = x;
+    int newY = y;
+    boolean positionValide = false;
+    int tentatives = 0;                    // Compteur pour éviter une boucle infinie et ne pas avoir une grande Complexité 
 
-    // Vérifie si la position est dans les limites
-    if (newX >= 0 && newX < environnement.cells.length && newY >= 0 && newY < environnement.cells[0].length)
-    {
-            environnement.mettreAJourCellule_Abeille(x, y, false); // Vide l'ancienne position
-            // Met à jour les coordonnées
-            x = newX;
-            y = newY;
-            // Vérifie si la nouvelle poisition de la abeille trouve une fleur
-            if (environnement.getCellBool(x, y)) {
-                System.out.println("Abeille est sur une fleur ");
-            }
-            System.out.println("Abeille déplacée à : (" + newX + ", " + newY + ")");
-            System.out.println("Contenu de la cellule : " + environnement.cells[newX][newY].getFill());
-            environnement.mettreAJourCellule_Abeille(x, y, true); // Remplit la nouvelle position
+    while (!positionValide && tentatives < 10) {
+        newX = x + random.nextInt(5) - 2; // Mouvement aléatoire entre -1 et +1
+        newY = y + random.nextInt(5) - 2;
+
+        
+        if (newX >= 0 && newX < environnement.cells.length 
+            && newY >= 0 && newY < environnement.cells[0].length
+            && !environnement.isCellPartOfRuche(newX, newY)) {
+            positionValide = true;
         }
+
+        tentatives++; 
+    }
+
+    
+    if (positionValide) {
+        environnement.mettreAJourCellule_Abeille(x, y, false);      // Vide l'ancienne position
+        x = newX;
+        y = newY;
+
+        // Vérifie si la nouvelle position contient une fleur
+        if (environnement.getCellBool(x, y)) {
+            System.out.println("Abeille est sur une fleur ");
+        }
+
+        System.out.println("Abeille déplacée à : (" + x + ", " + y + ")");
+        environnement.mettreAJourCellule_Abeille(x, y, true);     // Remplit la nouvelle position
+    } else {
+        System.out.println("Aucune position valide trouvée pour l'abeille après " + tentatives + " tentatives.");
     }
 }
 
 
-// utiliser min entre capacite abeille et quantite nectar dans fleur 
+}
