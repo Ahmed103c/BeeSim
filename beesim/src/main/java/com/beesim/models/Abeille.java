@@ -28,17 +28,31 @@ public abstract class Abeille {
         this.ruche = ruche;
         this.etatActuel=new ChercherNectar();
     }
+    public abstract void interagirAvecFleur(Fleur fleur);
     public void agir()
     {
         etatActuel.agir(this);
     }
     public void seDeplacerVers(int cibleX, int cibleY) {
+        int x1,y1;
         while (x != cibleX || y != cibleY) {
-            if (x < cibleX) x++;
+            x1=x;
+            y1=y;
+            if (x < cibleX) {x++;}
             else if (x > cibleX) x--;
             if (y < cibleY) y++;
             else if (y > cibleY) y--;
+            environnement.mettreAJourCellule_Abeille(x1,y1,false);
+            if (environnement.getCellBool(x, y)) {
+                System.out.println("Abeille est sur une fleur ");
+                Fleur fleur = environnement.getCell(x, y);
+                interagirAvecFleur(fleur);
+                // Si l'abeille est pleine, elle retourne à la ruche
 
+            }
+
+            // System.out.println("Abeille déplacée à : (" + x + ", " + y + ")");
+            environnement.mettreAJourCellule_Abeille(x, y, true);
             System.out.println("Position actuelle : [" + x + ", " + y + "]");
             energie--; // Réduire l'énergie pour chaque déplacement
         }
