@@ -67,11 +67,18 @@ public class SimFX extends Application {
          * 
          ************************************************************************/  
         
+        //AbeilleFactory :
+        AbeilleSansModeleFactory abeilleSansModelFactory = new AbeilleSansModeleFactory();
+        AbeilleSansModele abeilleTest =abeilleSansModelFactory.creerAbeille(grille,2,1,20,rucheSansModele);
+
+
+
         AbeilleSansModele AbeilleSansModele_1 =new AbeilleSansModele(grille,2,1,20,rucheSansModele);
         AbeilleSansModele AbeilleSansModele_2 =new AbeilleSansModele(grille,2,2,20,rucheSansModele);
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), event -> {
-            AbeilleSansModele_1.deplacer(); 
-            AbeilleSansModele_2.deplacer();
+            abeilleTest.deplacer();
+            //AbeilleSansModele_1.deplacer(); 
+            //AbeilleSansModele_2.deplacer();
             //System.out.println("Nectar sur l'abeille 0 : "+AbeilleSansModele_1.getNectarTransporté());
             //System.out.println("Nectar sur l'abeille 1 : "+AbeilleSansModele_2.getNectarTransporté());
             System.out.println("Quantité Nectar dans Ruche : "+rucheSansModele.getScore());
