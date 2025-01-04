@@ -184,4 +184,31 @@ public class AbeilleAvecModel extends Abeille {
     public static Map<String, Fleur> getMemoireCollective() {
         return memoireCollective;
     }
+    @Override
+    public void recevoirNotification(Fleur fleur) {
+        System.out.println("Abeille a la position:( " +getX()+","+getY()+") a été notifiée que la fleur " + fleur.getX() + "," + fleur.getY() + " est vide.");
+
+        // Si l'abeille est en état de recherche
+        if (etatActuel instanceof ChercherNectar) {
+            if (modeleInterne.containsKey(fleur)) {
+                System.out.println("Mise à jour de la mémoire collective pour la fleur vide.");
+                modeleInterne.remove(fleur); // Suppression de la fleur de la mémoire collective
+            } else {
+                System.out.println("La fleur n'était pas dans la mémoire collective.");
+            }
+        }
+
+        // Si l'abeille est en état de collecte
+        else if (etatActuel instanceof CollecterNectar) {
+            Fleur cible = ((CollecterNectar) etatActuel).getFleurCible();
+            if (cible != null && cible.equals(fleur)) {
+                System.out.println("La fleur cible est vide, retour à la ruche.");
+                modeleInterne.remove(fleur); // Mise à jour de la mémoire collective
+                setEtatActuel(new RetourRuche()); // Changer d'état
+            } else {
+                System.out.println("Mise à jour de la mémoire collective uniquement.");
+                modeleInterne.remove(fleur); // Supprimer la fleur vide
+            }
+        }
+    }
 }

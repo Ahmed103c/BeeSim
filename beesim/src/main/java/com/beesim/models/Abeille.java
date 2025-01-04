@@ -77,22 +77,22 @@ public abstract class Abeille {
         return etatActuel;
     }
 
-    int getX() {
+    public int getX() {
         return x;
     }
-    void setX(int x) {
+    public void setX(int x) {
         this.x = x;
     }
-    int getY() {
+    public int getY() {
         return y;
     }
-    void setY(int y) {
+    public void setY(int y) {
         this.y = y;
     }
-    int getCapaciteNectarPrise() {
+    public int getCapaciteNectarPrise() {
         return capaciteNectarPrise;
     }
-    void setCapaciteNectarPrise(int capaciteNectarPrise) {
+    public void setCapaciteNectarPrise(int capaciteNectarPrise) {
         this.capaciteNectarPrise = capaciteNectarPrise;
     }
     public int getEnergie() {
@@ -112,5 +112,5 @@ public abstract class Abeille {
     public boolean estDansLimites(int x, int y) {
         return x >= 0 && x < environnement.getRows() && y >= 0 && y < environnement.getCols();
     }
-
+    public abstract void recevoirNotification(Fleur fleur);
 }

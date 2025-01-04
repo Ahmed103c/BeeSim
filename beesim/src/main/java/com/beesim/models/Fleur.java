@@ -1,10 +1,12 @@
 package com.beesim.models;
+import com.beesim.Mediateeur.*;
 
 public class Fleur {
     private int x;
     private int y;
     private boolean occupe;
     private int nectar;
+    private mediateur mediateur;
     
     public Fleur(int x,int y,int nectar)
     {
@@ -12,6 +14,12 @@ public class Fleur {
         this.y=y;
         this.nectar=nectar;
         this.occupe=false;
+    }
+    public Fleur(int x,int y,int nectar,mediateur mediateur)
+    {
+        this(x,y,nectar);
+        this.mediateur=mediateur;
+
     }
     public int getX() {
         return x;
@@ -28,6 +36,13 @@ public class Fleur {
     public int getNectar() {
         return nectar;
     }
+    public mediateur getMediateur() {
+        return mediateur;
+    }
+    public void setMediateur(mediateur mediateur) {
+        this.mediateur = mediateur;
+    }
+
     public void setNectar(int nectar) {
         this.nectar = nectar;
     }
@@ -45,7 +60,9 @@ public class Fleur {
             this.nectar -= quantite;
             if (this.nectar <= 0) {
                 this.nectar = 0;
-                this.occupe = true; 
+                this.occupe = true;
+                System.out.println("Fleur de la position :(" + x +"," +y+") est épuisée !");
+                mediateur.notifierAbeilles(this);
             }
         }
     }

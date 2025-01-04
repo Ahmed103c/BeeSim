@@ -1,4 +1,5 @@
 package com.beesim.models;
+import com.beesim.State.*;
 import com.beesim.State.EtatAbeille;
 
 import javafx.scene.image.Image;
@@ -141,6 +142,21 @@ public class AbeilleSansModele extends Abeille {
     @Override
     public void rechercherNectar(int taille,int m){
         System.out.println("ChercherNectar");
+    }
+    @Override
+    public void recevoirNotification(Fleur fleur) {
+        System.out.println("Abeille a la position: (" + getX()+","+getY() + ") a été notifiée que la fleur " + fleur.getX() + "," + fleur.getY() + " est vide.");
+
+        // Si l'abeille est en état de collecte et la fleur vide est la cible
+        if (etatActuel instanceof CollecterNectar) {
+            Fleur cible = ((CollecterNectar) etatActuel).getFleurCible();
+            if (cible != null && cible.equals(fleur)) {
+                System.out.println("La fleur cible est vide, retour à la ruche.");
+                setEtatActuel(new RetourRuche());
+            } else {
+                System.out.println("Abeille sans modèle : pas d'action requise.");
+            }
+        }
     }
 
 

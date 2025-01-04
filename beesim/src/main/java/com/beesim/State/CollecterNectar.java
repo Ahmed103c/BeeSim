@@ -2,6 +2,10 @@ package com.beesim.State;
 import com.beesim.models.*;
 
 public class CollecterNectar implements EtatAbeille {
+    private Fleur fleurCible;
+    public Fleur getFleurCible() {
+        return fleurCible;
+    }
     @Override
     public void agir(Abeille abeille) {
         System.out.println("Abeille en mode CollecterNectar.");
