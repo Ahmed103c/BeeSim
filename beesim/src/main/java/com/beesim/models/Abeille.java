@@ -45,4 +45,6 @@ public abstract  class Abeille {
     public Ruche getRuche() {
         return ruche;
     }
+    public abstract void recevoirNotification(Fleur fleur);
+
 }
