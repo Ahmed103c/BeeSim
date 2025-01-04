@@ -18,7 +18,6 @@ import javafx.util.Duration;
 public class SimFX extends Application {
     @Override
     public void start(Stage primaryStage) {
-        
         /************************************************************************
          * 
          * 
@@ -29,45 +28,34 @@ public class SimFX extends Application {
          * 
          * 
          ************************************************************************/
-
-        int rows = 20;
-        int cols = 20;        
+        int rows = 10;
+        int cols = 10;        
         GridPane gridPane = new GridPane();
         Environnement grille = new Environnement(rows, cols, gridPane);
-
         /************************************************************************
          * 
          * 
          * 
-         *                Création les fleurs dans l'environnement 
+         *                Création des fleurs dans l'environnement 
          * 
          * 
          * 
          * 
          ************************************************************************/
-        // Utiliser un Set pour garantir que les nombres sont uniques
-        Set<Integer> liste_X_Fleur_Set = new HashSet<>();
-        Set<Integer> liste_Y_Fleur_Set = new HashSet<>();
-        Random random = new Random();
-
-        // Générer des nombres aléatoires jusqu'à en avoir 10 différents
-        while (liste_X_Fleur_Set.size() < 10) {
-            int num = random.nextInt(19) + 1;
-            liste_X_Fleur_Set.add(num);
-        }
-        while (liste_Y_Fleur_Set.size() < 10) {
-            int num = random.nextInt(19) + 1; 
-            liste_Y_Fleur_Set.add(num);
-        }
-
-        List<Integer> liste_X_Fleur =new ArrayList<>(liste_X_Fleur_Set);
-        List<Integer> liste_Y_Fleur =new ArrayList<>(liste_Y_Fleur_Set);
-        List<Fleur> Fleurs = new ArrayList<>();
-        for (int index = 0; index < liste_X_Fleur.size(); index++) {
-            Fleur fleur = new Fleur(grille, liste_X_Fleur.get(index), liste_Y_Fleur.get(index),10);
-            Fleurs.add(fleur);
-        }
-
+        grille.DessinerFleur();
+        /************************************************************************
+         * 
+         * 
+         * 
+         *                Création des ruches dans l'environnement 
+         * 
+         * 
+         * 
+         * 
+         ************************************************************************/
+        Ruche rucheSansModele=grille.getRuches().get(0);
+        Ruche rucheAvecModele=grille.getRuches().get(1);
+        grille.DessinerRuche(gridPane);
         /************************************************************************
          * 
          * 
@@ -77,19 +65,38 @@ public class SimFX extends Application {
          * 
          * 
          * 
-         ************************************************************************/
-        AbeilleFactory abeilleFactory = new AbeilleFactory();
-        Abeille abeilleSansModele_0 = abeilleFactory.creerAbeille("AvecModel",1, 1, 0);
+         ************************************************************************/  
+        
+        
+        AbeilleSansModeleFactory abeilleSansModelFactory = new AbeilleSansModeleFactory();
+        AbeilleSansModele abeilleTest =abeilleSansModelFactory.creerAbeille(grille,2,1,20,rucheSansModele);
 
 
+
+        AbeilleAvecModeleFactory abeilleAvecModelFactory = new AbeilleAvecModeleFactory();
+        AbeilleAvecModele abeilleTest2 =abeilleAvecModelFactory.creerAbeille(grille,15,15,20,rucheAvecModele);
+        
+
+   
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), event -> {
+            
+            abeilleTest.deplacer();
+            abeilleTest2.deplacerVersFleur();
+            //System.out.println("Quantité Nectar dans Ruche : "+rucheAvecModele.getScore());
+            //System.out.println("Quantité Nectar dans Ruche : "+rucheSansModele.getScore());
+
+        }));  
+        timeline.setCycleCount(Timeline.INDEFINITE); // Boucle infinie
+        timeline.play();
+        
         // Afficher la scène
         Scene scene = new Scene(gridPane, 825, 825);
         primaryStage.setTitle("Simulation d'abeille 2D");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         launch(args); // Lance l'application JavaFX
     }
 }

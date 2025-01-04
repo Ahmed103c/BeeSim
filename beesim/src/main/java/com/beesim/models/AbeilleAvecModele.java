@@ -1,107 +1,302 @@
 package com.beesim.models;
+
+import com.beesim.State.*;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+
 import java.util.*;
-import com.beesim.State.EtatAbeille;
+public class AbeilleAvecModele extends Abeille {
 
-public class AbeilleAvecModele extends Abeille{
-    private static HashMap<String, Fleur> memoireCollective = new HashMap<>();
-    private boolean rechercheTerminee = false; // Indique si la recherche est terminée
-    private boolean collecteTerminee = false; // Indique si la collecte est terminée
-    private int capacite;
+    private int x;
+    private int y;
+    private Environnement environnement;
 
-    public AbeilleAvecModele(int x, int y, int capacite) {
-        super(x, y, 0); // Le score commence à 0
-        this.capacite = capacite;
+   
+    public AbeilleAvecModele(Environnement environnement,int x, int y, int capaciteNectarPriseMax ,Ruche ruche) {
+        super(x, y,capaciteNectarPriseMax,ruche);
+        this.environnement=environnement;
+        environnement.set_Abeille_Avec_Modèle_Par_Défaults(x, y, true);
+        
     }
 
-    // Ajouter une fleur à la mémoire collective
-    public static void ajouterFleurMemoire(Fleur fleur) {
-        if (fleur == null || fleur.estVide()) return;
-        String cle = fleur.getX() + "," + fleur.getY();
-        memoireCollective.put(cle, fleur);
-        System.out.println("Fleur ajoutée : " + cle + " avec nectar " + fleur.getNectar());
-    }
+    public void collecterNectar(Fleur fleur) {
+        int nectarCollecte = Math.min(fleur.getNectar(), this.getCapaciteNectarPriseMaximale() - this.capaciteNectarPrise);
 
-    // Obtenir la liste des fleurs triée par nectar décroissant
-    private static List<Fleur> obtenirFleursTriees() {
-        List<Fleur> fleurs = new ArrayList<>(memoireCollective.values());
-        fleurs.sort((f1, f2) -> Integer.compare(f2.getNectar(), f1.getNectar())); // Tri décroissant
-        return fleurs;
-    }
-    public void rechercherNectar(int tailleGrille, boolean partieSuperieure) {
-        int limite = tailleGrille / 2;
+        if (nectarCollecte > 0) // Ne collecter que si la capacité permet
+        { 
+            this.capaciteNectarPrise += nectarCollecte; 
+            fleur.reduireNectar(nectarCollecte);
 
-        if (partieSuperieure) {
-            // Abeille 1 : Parcourt la moitié supérieure de la grille
-            for (int i = 0; i < limite; i++) {
-                for (int j = 0; j < tailleGrille; j++) {
-                    this.x = i;
-                    this.y = j;
-
-                    // Simuler la découverte d'une fleur
-                    Fleur fleur = environnementSimule(i, j);
-                    if (fleur != null && !fleur.estVide()) {
-                        ajouterFleurMemoire(fleur);
-                    }
-                }
-            }
+            System.out.println("Nectar collecté : " + nectarCollecte);
+            System.out.println("Capacité actuelle : " + this.capaciteNectarPrise + "/" + this.getCapaciteNectarPriseMaximale());
         } else {
-            // Abeille 2 : Parcourt la moitié inférieure de la grille (inverse de l'abeille 1)
-            for (int i = limite; i < tailleGrille; i++) {
-                for (int j = tailleGrille - 1; j >= 0; j--) {
-                    this.x = i;
-                    this.y = j;
+            System.out.println("Abeille pleine ! Aucun nectar supplémentaire collecté.");
+        }
+    }
 
-                    // Simuler la découverte d'une fleur
-                    Fleur fleur = environnementSimule(i, j);
-                    if (fleur != null && !fleur.estVide()) {
-                        ajouterFleurMemoire(fleur);
-                    }
-                }
-            }
+    private boolean isReturning = false;
+    private boolean isgoing = false;
+
+    public void deplacer() {
+        if (isReturning) {
+            return; // Si l'abeille est en train de retourner à la ruche, on ne fait rien
         }
 
-        rechercheTerminee = true;
-    }
-    public void collecterNectar(boolean prioriteMax) {
-        List<Fleur> fleursTriees = obtenirFleursTriees();
+        Random random = new Random();
+        int newX = x;
+        int newY = y;
+        boolean positionValide = false;
+        int tentatives = 0;
 
-        // Sélectionner la fleur appropriée
-        if (fleursTriees.isEmpty()) {
-            collecteTerminee = true;
+        if (this.getCapaciteNectarPrise() >= this.getCapaciteNectarPriseMaximale()) {
+            System.out.println("On atteint ou dépasse la capacité maximale ");
+            this.retournerAuRuche(this.ruche);
+            isReturning = true;  // Mettre le flag à true pour bloquer les autres déplacements pendant le retour
             return;
         }
-        Fleur cible = prioriteMax ? fleursTriees.get(0) : (fleursTriees.size() > 1 ? fleursTriees.get(1) : null);
 
-        if (cible != null) {
-            int nectarCollecte = Math.min(cible.getNectar(), capacite);
-            cible.setNectar(cible.getNectar() - nectarCollecte);
-            this.score += nectarCollecte;
+        while (!positionValide && tentatives < 10) {
 
-            // Mettre à jour la mémoire collective
-            String cle = cible.getX() + "," + cible.getY();
-            if (cible.getNectar() <= 0) {
-                memoireCollective.remove(cle);
-            } else {
-                memoireCollective.put(cle, cible);
+            newX = x + random.nextInt(5) - 2;   // Mouvement aléatoire entre -1 et +1
+            newY = y + random.nextInt(5) - 2;
+
+            if (newX >= 0 && newX < environnement.cells.length 
+                && newY >= 0 && newY < environnement.cells[0].length
+                && !environnement.isCellPartOfRuche(newX, newY)) {
+                positionValide = true;
             }
-            System.out.println("Collecte terminée : " + nectarCollecte + " nectar pris à " + cle);
+
+            tentatives++; 
         }
-        collecteTerminee = true;
-    }
-    @Override
-    public void agir() {
-        if (!rechercheTerminee) {
-            System.out.println("Abeille cherche des fleurs...");
-            rechercherNectar(10, this.x < 5); //justeUnExemple
-        } else if (!collecteTerminee) {
-            System.out.println("Abeille collecte du nectar...");
-            collecterNectar(true);
+
+        if (environnement.getCellBool(x, y)) {
+            Fleur fleur = environnement.getCell(x, y);
+            fleur.setOccupe(false);
+        }
+
+        if (positionValide) {
+            environnement.mettreAJourCellule_AbeilleAvecModele(x, y, false);
+            x = newX;
+            y = newY;
+
+            if (environnement.getCellBool(x, y)) {
+                System.out.println("Abeille est sur une fleur ");
+                Fleur fleur = environnement.getCell(x, y);
+                fleur.setOccupe(true);
+                this.collecterNectar(fleur);
+            }
+
+            environnement.mettreAJourCellule_AbeilleAvecModele(x, y, true);
         } else {
-            System.out.println("Abeille retourne à la ruche.");
+            System.out.println("Aucune position valide trouvée pour l'abeille après " + tentatives + " tentatives.");
         }
+    }
+/* 
+    public void retournerAuRuche(Ruche ruche) {
+        System.out.println("Abeille retourne à la ruche.");
+        int rucheX = ruche.getPositionX(); // Coordonnées fixes de la ruche
+        int rucheY = ruche.getPositionY();
+
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE); // Boucle infinie pour l'animation
+
+        KeyFrame keyFrame = new KeyFrame(javafx.util.Duration.millis(500), event -> {
+            if (x != rucheX || y != rucheY) {
+                int xAncien = x;
+                int yAncien = y;
+
+                if (x < rucheX) x++;
+                else if (x > rucheX) x--;
+
+                if (y < rucheY) y++;
+                else if (y > rucheY) y--;
+
+                environnement.mettreAJourCellule_AbeilleAvecModele(xAncien, yAncien, false);
+                environnement.mettreAJourCellule_AbeilleAvecModele(x, y, true);
+            } else {
+                ruche.ajouterNectar(this.capaciteNectarPrise);
+                this.capaciteNectarPrise = 0;
+                timeline.stop();
+                isReturning = false;  // Réinitialiser le flag pour permettre un nouveau déplacement
+            }
+        });
+
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play(); // Démarrer l'animation
     }
 
-    public static HashMap<String, Fleur> getMemoireCollective() {
-        return memoireCollective;
+
+    public void deplacerVersCible(int cibleX, int cibleY, Runnable actionFinale) {
+    System.out.println("Abeille se déplace vers la cible : (" + cibleX + ", " + cibleY + ")");
+    
+    Timeline timeline = new Timeline();
+    timeline.setCycleCount(Timeline.INDEFINITE); // Boucle infinie pour l'animation
+
+    KeyFrame keyFrame = new KeyFrame(javafx.util.Duration.millis(500), event -> {
+        if (x != cibleX || y != cibleY) {
+            int xAncien = x;
+            int yAncien = y;
+
+            if (x < cibleX) x++;
+            else if (x > cibleX) x--;
+
+            if (y < cibleY) y++;
+            else if (y > cibleY) y--;
+
+            environnement.mettreAJourCellule_AbeilleAvecModele(xAncien, yAncien, false);
+            environnement.mettreAJourCellule_AbeilleAvecModele(x, y, true);
+        } else {
+            timeline.stop();
+            isgoing=false;
+            if (actionFinale != null) {
+                actionFinale.run(); // Exécute une action lorsque la cible est atteinte
+            }
+        }
+    });
+
+    timeline.getKeyFrames().add(keyFrame);
+    timeline.play(); // Démarrer l'animation
     }
+
+    public void deplacerVersFleur() {
+        if (isgoing) {
+            return;
+        }
+        // if (this.getCapaciteNectarPrise() >= this.getCapaciteNectarPriseMaximale()) {
+        //     System.out.println("On atteint ou dépasse la capacité maximale ");
+        //     this.retournerAuRuche(this.ruche);
+        //     isgoing = true;  // Mettre le flag à true pour bloquer les autres déplacements pendant le retour
+        //     return;
+        // }
+        Random random = new Random();
+        List<Fleur> fleurs =environnement.getFleursFixes();
+        Fleur fleurCible = fleurs.get(random.nextInt(fleurs.size()));
+        deplacerVersCible(fleurCible.getX(), fleurCible.getY(), () -> {
+        System.out.println("Abeille a atteint la fleur : (" + fleurCible.getX() + ", " + fleurCible.getY() + ")");
+        this.collecterNectar(fleurCible);
+           if (this.getCapaciteNectarPrise() >= this.getCapaciteNectarPriseMaximale()) {
+            System.out.println("On atteint ou dépasse la capacité maximale ");
+            this.retournerAuRuche(this.ruche);
+            isgoing = true;  // Mettre le flag à true pour bloquer les autres déplacements pendant le retour
+            return;
+        }
+        //isReturning = true; // Une fois le nectar collecté, l'abeille retourne à la ruche
+        //retournerAuRuche(this.ruche);
+    });
+
 }
+    */
+
+public void retournerAuRuche(Ruche ruche) {
+    System.out.println("Abeille retourne à la ruche.");
+    int rucheX = ruche.getPositionX(); // Coordonnées fixes de la ruche
+    int rucheY = ruche.getPositionY();
+
+    Timeline timeline = new Timeline();
+    timeline.setCycleCount(Timeline.INDEFINITE); // Boucle infinie pour l'animation
+
+    KeyFrame keyFrame = new KeyFrame(javafx.util.Duration.millis(500), event -> {
+        if (x != rucheX || y != rucheY) {
+            int xAncien = x;
+            int yAncien = y;
+
+            // Calcul du déplacement vers la ruche
+            if (x < rucheX) x++;
+            else if (x > rucheX) x--;
+
+            if (y < rucheY) y++;
+            else if (y > rucheY) y--;
+
+            // Mise à jour de l'environnement
+            environnement.mettreAJourCellule_AbeilleAvecModele(xAncien, yAncien, false);
+            environnement.mettreAJourCellule_AbeilleAvecModele(x, y, true);
+        } else {
+            // Actions une fois arrivé à la ruche
+            ruche.ajouterNectar(this.capaciteNectarPrise);
+            this.capaciteNectarPrise = 0; // Réinitialise le nectar transporté
+            timeline.stop();
+            isReturning = false; // Permettre de redéplacer l'abeille
+            System.out.println("Abeille a atteint la ruche et déposé le nectar.");
+            isgoing = false; // Autoriser l'abeille à repartir
+            deplacerVersFleur(); // Relancer la recherche de fleurs
+        }
+    });
+
+    timeline.getKeyFrames().add(keyFrame);
+    timeline.play(); // Démarrer l'animation
+}
+
+public void deplacerVersCible(int cibleX, int cibleY, Runnable actionFinale) {
+    System.out.println("Abeille se déplace vers la cible : (" + cibleX + ", " + cibleY + ")");
+
+    Timeline timeline = new Timeline();
+    timeline.setCycleCount(Timeline.INDEFINITE); // Boucle infinie pour l'animation
+
+    KeyFrame keyFrame = new KeyFrame(javafx.util.Duration.millis(500), event -> {
+        if (x != cibleX || y != cibleY) {
+            int xAncien = x;
+            int yAncien = y;
+
+            // Calcul du déplacement vers la cible
+            if (x < cibleX) x++;
+            else if (x > cibleX) x--;
+
+            if (y < cibleY) y++;
+            else if (y > cibleY) y--;
+
+            // Mise à jour de l'environnement
+            environnement.mettreAJourCellule_AbeilleAvecModele(xAncien, yAncien, false);
+            environnement.mettreAJourCellule_AbeilleAvecModele(x, y, true);
+        } else {
+            timeline.stop();
+            isgoing = false; // Permettre un nouveau déplacement
+            if (actionFinale != null) {
+                actionFinale.run(); // Exécute une action lorsqu’on atteint la cible
+            }
+        }
+    });
+
+    timeline.getKeyFrames().add(keyFrame);
+    timeline.play(); // Démarrer l'animation
+}
+
+public void deplacerVersFleur() {
+    if (isgoing) {
+        return; // Empêche le déplacement si une animation est déjà en cours
+    }
+
+    Random random = new Random();
+    List<Fleur> fleurs = environnement.getFleursFixes();
+
+    if (fleurs.isEmpty()) {
+        System.out.println("Aucune fleur disponible.");
+        return;
+    }
+
+    Fleur fleurCible = fleurs.get(random.nextInt(fleurs.size()));
+    isgoing = true; // Bloque d'autres déplacements pendant cette animation
+
+    deplacerVersCible(fleurCible.getX(), fleurCible.getY(), () -> {
+        System.out.println("Abeille a atteint la fleur : (" + fleurCible.getX() + ", " + fleurCible.getY() + ")");
+        this.collecterNectar(fleurCible);
+
+        // Vérifie si l'abeille doit retourner à la ruche
+        if (this.getCapaciteNectarPrise() >= this.getCapaciteNectarPriseMaximale()) {
+            System.out.println("Capacité maximale atteinte, retour à la ruche.");
+            retournerAuRuche(this.ruche);
+            isgoing = true; // Bloque les déplacements pendant le retour
+        } else {
+            isgoing = false; // Permettre un autre déplacement si la ruche n’est pas nécessaire
+        }
+    });
+}
+
+} 
+
+
+
+
+
+
+

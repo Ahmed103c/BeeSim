@@ -5,16 +5,14 @@ public class Fleur {
     private int y;
     private boolean occupe;
     private int nectar;
-    private Environnement environnement;
+    
 
-    public Fleur(Environnement environnement,int x,int y,int nectar)
+    public Fleur(int x,int y,int nectar)
     {
-        this.environnement=environnement;
         this.x=x;
         this.y=y;
         this.nectar=nectar;
         this.occupe=false;
-        environnement.set_Couleur_Fleur_Par_Défault(x, y, true);
     }
     
 
@@ -39,8 +37,25 @@ public class Fleur {
     public boolean estVide(){
         return  nectar==0;
     }
+    public void setOccupe(boolean occup)
+    {
+        this.occupe=occup;
+    }
     public boolean isOccupe() {
         return occupe;
+    }
+    public void reduireNectar(int quantite) {
+        if (!occupe && quantite <= nectar) {
+            this.nectar -= quantite;
+            if (this.nectar <= 0) {
+                this.nectar = 0;
+                this.occupe = true; // La fleur devient inaccessible si tout le nectar est collecté
+            }
+        }
+    }
+    @Override
+    public String toString() {
+        return "Fleur [x=" + x + ", y=" + y + ", nectar=" + nectar + ", estAccessible=" + !occupe + "]";
     }
     /*il faut ajouter les fonction d'occupation*/
 
