@@ -52,6 +52,8 @@ public class Environnement {
      * 
      * 
      ***********************************************************************/
+
+
     public List<Fleur> getFleurs() {
         List<Fleur> Fleurs = new ArrayList<>();
         Set<String> usedPositions = new HashSet<>(); 
@@ -107,6 +109,9 @@ public class Environnement {
             this.set_Couleur_Fleur_Par_Défault(fleur.getX(), fleur.getY(), true);
         }
     }   
+
+
+
     /*************************************************************************
      * 
      * 
@@ -117,14 +122,16 @@ public class Environnement {
      * 
      * 
      ***********************************************************************/
+    
+
     public void initialiserRuches() {
         Set<String> positions = new HashSet<>();
         int x = 0, y = 0;
         int x2 = rows-2, y2 = cols-2;
         positions.add(x + "," + y);
         positions.add(x2 + "," + y2);
-        ruches.add(new Ruche(x, y));
-        ruches.add(new Ruche(x2, y2)); //il faut voir avec chatGPt une autre fois putain
+        ruches.add(new Ruche(x, y,0));
+        ruches.add(new Ruche(x2, y2,0)); //il faut voir avec chatGPt une autre fois putain
     }
     public List<Ruche> getRuches()
     {
@@ -133,8 +140,8 @@ public class Environnement {
     }
     public void DessinerRuche(GridPane gridPane)
     {
-        Rectangle rucheCell = new Rectangle(80, 80); // Taille de la zone fusionnée
-        rucheCell.setStroke(Color.BLACK);            // Bordure pour la cellule fusionnée
+        Rectangle rucheCell = new Rectangle(80, 80);   // Taille de la zone fusionnée
+        rucheCell.setStroke(Color.BLACK);              // Bordure pour la cellule fusionnée
         Image rucheImage = new Image(getClass().getResource("../images/rucheSansModele.png").toExternalForm()); 
         rucheCell.setFill(new ImagePattern(rucheImage));
 
@@ -142,23 +149,23 @@ public class Environnement {
         gridPane.getChildren().removeAll(cells[0][0], cells[0][1], cells[1][0], cells[1][1]);
 
         // Ajouter le rectangle fusionné
-        gridPane.add(rucheCell, 0, 0); // Position (0,0) comme point de départ
-        GridPane.setColumnSpan(rucheCell, 2); // Fusionner 2 colonnes
-        GridPane.setRowSpan(rucheCell, 2);    // Fusionner 2 lignes*
+        gridPane.add(rucheCell, 0, 0);         // Position (0,0) comme point de départ
+        GridPane.setColumnSpan(rucheCell, 2);  // Fusionner 2 colonnes
+        GridPane.setRowSpan(rucheCell, 2);     // Fusionner 2 lignes*
 
 
-        Rectangle rucheCell2 = new Rectangle(80, 80); // Taille de la zone fusionnée
-        rucheCell2.setStroke(Color.BLACK);            // Bordure pour la cellule fusionnée
+        Rectangle rucheCell2 = new Rectangle(80, 80); 
+        rucheCell2.setStroke(Color.BLACK);            
         Image rucheImage2 = new Image(getClass().getResource("../images/rucheAvecModele.png").toExternalForm());  
         rucheCell2.setFill(new ImagePattern(rucheImage2));
 
-        // Supprimer les anciennes cellules si nécessaire (facultatif, selon votre logique)
+   
         gridPane.getChildren().removeAll(cells[rows-1][cols-1], cells[rows-2][cols-1], cells[rows-1][cols-2], cells[rows-2][cols-2]);
 
-        // Ajouter le rectangle fusionné
-        gridPane.add(rucheCell2, rows-2, cols-2); // Position (0,0) comme point de départ
-        GridPane.setColumnSpan(rucheCell2, 2); // Fusionner 2 colonnes
-        GridPane.setRowSpan(rucheCell2, 2);    // Fusionner 2 lignes*
+       
+        gridPane.add(rucheCell2, rows-2, cols-2); 
+        GridPane.setColumnSpan(rucheCell2, 2); 
+        GridPane.setRowSpan(rucheCell2, 2);    
     }
     
 
@@ -173,17 +180,19 @@ public class Environnement {
      * 
      * 
      ***********************************************************************/
+
+
     public void set_Abeille_Sans_Modèle_Par_Défaults(int x,int y,boolean occupe)
     {
         if (x >=2 && x < rows-2 && y >=2 && y < cols-2) 
         {
-            if (occupe) {
-                // Charger l'image de fleur
-                Image abeilleImage = new Image(getClass().getResource("../images/beeSansModele.png").toExternalForm()); // Assurez-vous que l'image est accessible depuis le chemin
-                cells[x][y].setFill(new ImagePattern(abeilleImage)); // Appliquer l'image comme motif
+            if (occupe) //si abeille existe sur la cellule
+            {
+                Image abeilleImage = new Image(getClass().getResource("../images/beeSansModele.png").toExternalForm()); 
+                cells[x][y].setFill(new ImagePattern(abeilleImage)); 
             } else {
                 System.out.println("Erreur dans la position de la fleur");
-                cells[x][y].setFill(Color.LIGHTGRAY); // Couleur par défaut si pas de fleur
+                cells[x][y].setFill(Color.LIGHTGRAY); 
             }
         }
     }
@@ -194,7 +203,7 @@ public class Environnement {
             if (occupe) 
             {
                 Image abeilleImage = new Image(getClass().getResource("../images/beeSansModele.png").toExternalForm()); 
-                cells[x][y].setFill(new ImagePattern(abeilleImage)); // Appliquer l'image comme motif
+                cells[x][y].setFill(new ImagePattern(abeilleImage)); 
             }
             else // Abeille n'est pas sur la grille 
             {
@@ -204,18 +213,7 @@ public class Environnement {
                 }
                 else
                 {
-                    // if(x==0 && y==0)
-                    // {
-                    //     initialiserRuches();
-                    //     Ruche ruche1 = ruches.get(0);
-                    //     Image rucheImage = new Image(getClass().getResource("../images/rucheAvecModele.png").toExternalForm()); 
-                    //     cells[ruche1.getPositionX()][ruche1.getPositionY()].setFill(new ImagePattern(rucheImage));   
-                    // }
-                    //else    
-                    //{
-
-                        cells[x][y].setFill(Color.LIGHTGRAY);
-                    //}
+                    cells[x][y].setFill(Color.LIGHTGRAY);
                 }
             }
         }
@@ -224,7 +222,8 @@ public class Environnement {
 
         }
     }
-    public boolean isCellPartOfRuche(int x, int y) {
+    public boolean isCellPartOfRuche(int x, int y) 
+    {
     for (Ruche ruche : ruches) {
         int rucheX = ruche.getPositionX();
         int rucheY = ruche.getPositionY();
@@ -237,7 +236,7 @@ public class Environnement {
         }
     }
     return false;
-}
+    }
 
 
 }

@@ -1,19 +1,23 @@
 package com.beesim.models;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+
 import com.beesim.State.*;
 public abstract class Abeille {
     protected int x;
     protected int y;
     protected int capaciteNectarPrise;
+    protected int capaciteNectarPriseMaximale;
     protected Ruche ruche;
     protected int nectarTransporte;
     protected int energie;    
     protected EtatAbeille etatActuel;
 
 
-    public Abeille(int x, int y ,int  capaciteNectarPrise ,Ruche ruche) {
+    public Abeille(int x, int y ,int  capaciteNectarPriseMaximale ,Ruche ruche) {
         this.x = x;
         this.y = y;
-        this.capaciteNectarPrise = capaciteNectarPrise;
+        this.capaciteNectarPriseMaximale = capaciteNectarPriseMaximale;
+        this.capaciteNectarPrise=0;
         this.energie = 100;
         this.nectarTransporte=0;
         this.ruche = ruche;
@@ -37,7 +41,6 @@ public abstract class Abeille {
     //public abstract void aller();
     //public abstract void retour();
     //public  boolean estSurFleur();
-
     public void ajouterNectarTransporté(int quantité) {
         nectarTransporte += quantité;
     }
@@ -53,7 +56,6 @@ public abstract class Abeille {
     {
         return etatActuel;
     }
-
     int getX() {
         return x;
     }
@@ -69,17 +71,21 @@ public abstract class Abeille {
     int getCapaciteNectarPrise() {
         return capaciteNectarPrise;
     }
+    int getCapaciteNectarPriseMaximale() {
+        return capaciteNectarPriseMaximale;
+    }
+    int getCapaciteNectarDisponible(){
+        return capaciteNectarPriseMaximale-capaciteNectarPrise;
+    }
     void setCapaciteNectarPrise(int capaciteNectarPrise) {
         this.capaciteNectarPrise = capaciteNectarPrise;
     }
     public int getEnergie() {
         return energie;
     }
-
     public int getNectarTransporté() {
         return nectarTransporte;
     }
-
     public Ruche getRuche() {
         return ruche;
     }
