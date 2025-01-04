@@ -1,18 +1,34 @@
 package com.beesim;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 
 import org.junit.Test;
 
 
 
 import com.beesim.models.*;
-import com.beesim.models.Fleur;
+
+import javafx.scene.layout.GridPane;
 
 public class SimTest 
 {
+
+    @Test
+    public void testCreationAbeilleSansModele() {
+    AbeilleSansModele abeille = new AbeilleSansModele(null,2, 1, 20, null);
+    assertEquals("Position X de l'abeille incorrecte",2, abeille.getX());
+    assertEquals("Position Y de l'abeille incorrecte",1, abeille.getY());
+    }   
+
+    @Test
+    public void testCreationAbeilleAvecModele() {
+    AbeilleAvecModele abeille = new AbeilleAvecModele(null,2, 1, 20, null);
+    assertEquals("Position X de l'abeille incorrecte",2, abeille.getX());
+    assertEquals("Position Y de l'abeille incorrecte",1, abeille.getY());
+    }   
+
 
     /****************************************************************
      * 
@@ -33,6 +49,7 @@ public class SimTest
         assertEquals(5, fleur.getNectar());
     }
 
+    
     @Test
     public void testCollecterNectarSuffisant_AbeilleAvecModel() {
         AbeilleAvecModele abeilleAvecModele = new AbeilleAvecModele(10);
@@ -42,4 +59,13 @@ public class SimTest
         assertEquals(5, fleur.getNectar());
     }
     
+
+    @Test
+    public void testEnvironnementCreation() {
+    Environnement grille = new Environnement(10, 10, new GridPane());
+    //grille.DessinerFleur();
+    assertNotNull( "Les fleurs devraient être créées",grille.getFleurs());
+    assertTrue("Il devrait y avoir des fleurs dans l'environnement",grille.getFleurs().size() > 0 );
+    }
+
 }

@@ -45,4 +45,13 @@ public abstract  class Abeille {
     public Ruche getRuche() {
         return ruche;
     }
+    public int getX()
+    {
+        return x;
+    }
+    public int getY()
+    {
+        return y;
+    }
+
 }
