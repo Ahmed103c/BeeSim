@@ -109,7 +109,9 @@ public class Environnement {
             this.set_Couleur_Fleur_Par_Défault(fleur.getX(), fleur.getY(), true);
         }
     }   
-
+    public List<Fleur> getFleursFixes(){
+        return fleurs;
+    }
 
 
     /*************************************************************************
@@ -196,6 +198,22 @@ public class Environnement {
             }
         }
     }
+
+    public void set_Abeille_Avec_Modèle_Par_Défaults(int x,int y,boolean occupe)
+    {
+        if (x >=2 && x < rows-2 && y >=2 && y < cols-2) 
+        {
+            if (occupe) //si abeille existe sur la cellule
+            {
+                Image abeilleImage = new Image(getClass().getResource("../images/beeAvecModele.png").toExternalForm()); 
+                cells[x][y].setFill(new ImagePattern(abeilleImage)); 
+            } else {
+                System.out.println("Erreur dans la position de la fleur");
+                cells[x][y].setFill(Color.LIGHTGRAY); 
+            }
+        }
+    }
+
     public void mettreAJourCellule_Abeille(int x, int y, boolean occupe)
     {
         
@@ -222,6 +240,57 @@ public class Environnement {
 
         }
     }
+
+       public void mettreAJourCellule_AbeilleAvecModele(int x, int y, boolean occupe)
+    {
+        
+        if (x >=0 && x < rows && y >=0 && y < cols) {
+            if (occupe) 
+            {
+                Image abeilleImage = new Image(getClass().getResource("../images/beeAvecModele.png").toExternalForm()); 
+                cells[x][y].setFill(new ImagePattern(abeilleImage)); 
+            }
+            else // Abeille n'est pas sur la grille 
+            {
+                if(this.getCellBool(x, y))
+                {
+                    this.set_Couleur_Fleur_Par_Défault(x, y, true);
+                }
+                else
+                {
+                    cells[x][y].setFill(Color.LIGHTGRAY);
+                }
+            }
+        }
+        else
+        {
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public boolean isCellPartOfRuche(int x, int y) 
     {
     for (Ruche ruche : ruches) {

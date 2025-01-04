@@ -67,25 +67,28 @@ public class SimFX extends Application {
          * 
          ************************************************************************/  
         
-        //AbeilleFactory :
+        
         AbeilleSansModeleFactory abeilleSansModelFactory = new AbeilleSansModeleFactory();
         AbeilleSansModele abeilleTest =abeilleSansModelFactory.creerAbeille(grille,2,1,20,rucheSansModele);
 
 
 
-        AbeilleSansModele AbeilleSansModele_1 =new AbeilleSansModele(grille,2,1,20,rucheSansModele);
-        AbeilleSansModele AbeilleSansModele_2 =new AbeilleSansModele(grille,2,2,20,rucheSansModele);
+        AbeilleAvecModeleFactory abeilleAvecModelFactory = new AbeilleAvecModeleFactory();
+        AbeilleAvecModele abeilleTest2 =abeilleAvecModelFactory.creerAbeille(grille,15,15,20,rucheAvecModele);
+        
+
+   
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), event -> {
+            
             abeilleTest.deplacer();
-            //AbeilleSansModele_1.deplacer(); 
-            //AbeilleSansModele_2.deplacer();
-            //System.out.println("Nectar sur l'abeille 0 : "+AbeilleSansModele_1.getNectarTransporté());
-            //System.out.println("Nectar sur l'abeille 1 : "+AbeilleSansModele_2.getNectarTransporté());
-            System.out.println("Quantité Nectar dans Ruche : "+rucheSansModele.getScore());
+            abeilleTest2.deplacerVersFleur();
+            //System.out.println("Quantité Nectar dans Ruche : "+rucheAvecModele.getScore());
+            //System.out.println("Quantité Nectar dans Ruche : "+rucheSansModele.getScore());
+
         }));  
         timeline.setCycleCount(Timeline.INDEFINITE); // Boucle infinie
         timeline.play();
-
+        
         // Afficher la scène
         Scene scene = new Scene(gridPane, 825, 825);
         primaryStage.setTitle("Simulation d'abeille 2D");
