@@ -42,24 +42,12 @@ public class AbeilleSansModele extends Abeille {
         }
     }
     public void deplacer() {
-        Random random = new Random();
         int newX = x;
         int newY = y;
         boolean positionValide = false;
         int tentatives = 0;                     // Compteur pour éviter une boucle infinie et ne pas avoir une grande Complexité
-        if (this.getCapaciteNectarPrise() >= this.getCapaciteNectarPrise())
-        {
-            System.out.println("On Atteint ou dépasse capacité maximale ");
-            this.retournerAuRuche(this.ruche);
-            return; // Sort de la fonction pour éviter le déplacement aléatoire
-        }
-        else
-        {
-            System.out.println("On est encore sous capacité maximale ");
-        }
         while (!positionValide && tentatives < 10) {
-            newX = x + random.nextInt(5) - 2;   // Mouvement aléatoire entre -1 et +1
-            newY = y + random.nextInt(5) - 2;
+
 
 
             if (newX >= 0 && newX < environnement.cells.length
@@ -98,6 +86,10 @@ public class AbeilleSansModele extends Abeille {
         } else {
             System.out.println("Aucune position valide trouvée pour l'abeille après " + tentatives + " tentatives.");
         }
+    }
+    @Override
+    public void interagirAvecFleur(Fleur fleur) {
+        System.out.println("salut");
     }
 
     public void retournerAuRuche(Ruche ruche) {

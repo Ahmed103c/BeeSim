@@ -53,7 +53,10 @@ public class AbeilleAvecModel extends Abeille {
         // Retourne la deuxième fleur avec le maximum de nectar (priorité secondaire)
         return fleursTriees.get(1);
     }
-
+    @Override
+    public void interagirAvecFleur(Fleur fleur){
+        ajouterFleurMemoireCollective(fleur);
+    }
     /**
      * Ajoute une fleur à la mémoire collective.
      */
@@ -154,18 +157,6 @@ public class AbeilleAvecModel extends Abeille {
 
         System.out.println("Collecte de " + nectarCollecte + " nectar sur la fleur à " + cle);
         setEtatActuel(new RetourRuche()); // Retourne à la ruche après la collecte
-    }
-
-    /**
-     * Retourne l'abeille à la ruche pour vider le nectar collecté.
-     */
-    public void retournerALaRuche() {
-        seDeplacerVers(getRuche().getPositionX(), getRuche().getPositionY());
-        int nectar = getNectarTransporté();
-        getRuche().ajouterNectar(nectar);
-        viderNectarTransporté();
-        System.out.println("Abeille retournée à la ruche et nectar vidé.");
-        setEtatActuel(new Repos()); // Passe en état de repos après dépôt
     }
 
     /**
