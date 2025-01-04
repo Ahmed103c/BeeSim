@@ -1,14 +1,13 @@
 package com.beesim.models;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+
 
 import com.beesim.State.*;
-public abstract class Abeille {
+public abstract  class Abeille {
     protected int x;
     protected int y;
     protected int capaciteNectarPrise;
     protected int capaciteNectarPriseMaximale;
-    protected Ruche ruche;
-    protected int energie;    
+    protected Ruche ruche;   
     protected EtatAbeille etatActuel;
     
 
@@ -17,9 +16,12 @@ public abstract class Abeille {
         this.y = y;
         this.capaciteNectarPriseMaximale = capaciteNectarPriseMaximale;
         this.capaciteNectarPrise=0;
-        this.energie = 100;
         this.ruche = ruche;
         this.etatActuel=new ChercherNectar();
+    }
+    public Abeille(int capaciteNectarPriseMaximale )
+    {
+         this(1, 1, capaciteNectarPriseMaximale, null);
     }
 
 
@@ -28,16 +30,16 @@ public abstract class Abeille {
         this.etatActuel=etatAbeille;
     }
 
-    int getCapaciteNectarPrise() {
+    public int getCapaciteNectarPrise() {
         return capaciteNectarPrise;
     }
-    int getCapaciteNectarPriseMaximale() {
+    public int getCapaciteNectarPriseMaximale() {
         return capaciteNectarPriseMaximale;
     }
-    int getCapaciteNectarDisponible(){
+    public int getCapaciteNectarDisponible(){
         return capaciteNectarPriseMaximale-capaciteNectarPrise;
     }
-    void setCapaciteNectarPrise(int capaciteNectarPrise) {
+    public void setCapaciteNectarPrise(int capaciteNectarPrise) {
         this.capaciteNectarPrise = capaciteNectarPrise;
     }
     public Ruche getRuche() {
