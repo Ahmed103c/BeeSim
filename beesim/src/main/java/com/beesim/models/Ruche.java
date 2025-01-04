@@ -1,13 +1,12 @@
 package com.beesim.models;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class Ruche {
     private int positionX;
     private int positionY;
     private int score ;
-    private List<Abeille> abeilles; // Liste des abeilles appartenant à cette ruche
+   
 
     public Ruche(int positionX, int positionY, int score) {
         this.positionX = positionX;
@@ -17,7 +16,7 @@ public class Ruche {
     public Ruche(int x, int y) {
         this.positionX = x;
         this.positionY = y;
-        this.abeilles = new ArrayList<>();
+      
     }
     public int getPositionX() {
         return positionX;

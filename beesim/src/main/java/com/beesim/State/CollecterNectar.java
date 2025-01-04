@@ -1,6 +1,6 @@
 package com.beesim.State;
 
-import com.beesim.models.Abeille;
+
 
 public class CollecterNectar extends EtatAbeille{
     public CollecterNectar()

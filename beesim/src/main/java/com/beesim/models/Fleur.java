@@ -14,7 +14,10 @@ public class Fleur {
         this.nectar=nectar;
         this.occupe=false;
     }
-    
+    public Fleur(int nectar)
+    {
+        this(15,15,nectar);
+    }
 
     public int getX() {
         return x;

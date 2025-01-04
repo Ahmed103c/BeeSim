@@ -1,18 +1,15 @@
 package com.beesim.models;
 import com.beesim.State.ChercherNectar;
 import com.beesim.State.CollecterNectar;
-import com.beesim.State.EtatAbeille;
+
 import com.beesim.State.RetourRuche;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.image.Image;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
-import javax.swing.plaf.synth.SynthEditorPaneUI;
+
 
 public class AbeilleSansModele extends Abeille {
 
@@ -24,8 +21,13 @@ public class AbeilleSansModele extends Abeille {
     public AbeilleSansModele(Environnement environnement,int x, int y, int capaciteNectarPriseMax ,Ruche ruche) {
         super(x, y,capaciteNectarPriseMax,ruche);
         this.environnement=environnement;
-        environnement.set_Abeille_Sans_Modèle_Par_Défaults(x, y, true);
+        //environnement.set_Abeille_Sans_Modèle_Par_Défaults(x, y, true);
         
+    }
+    //Ce constructeur sera utile pour les tests
+    public AbeilleSansModele(int capaciteNectarPriseMaximale )
+    {
+         this(null,1, 1, capaciteNectarPriseMaximale, null);
     }
 
     public void collecterNectar(Fleur fleur) {
@@ -39,7 +41,7 @@ public class AbeilleSansModele extends Abeille {
             System.out.println("Nectar collecté : " + nectarCollecte);
             System.out.println("Capacité actuelle : " + this.capaciteNectarPrise + "/" + this.getCapaciteNectarPriseMaximale());
         } else {
-            System.out.println("Abeille pleine ! Aucun nectar supplémentaire collecté.");
+            System.out.println("Abeille pleine ! Aucun nectar supplémentaire collecté.");
         }
     }
 

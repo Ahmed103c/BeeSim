@@ -16,8 +16,13 @@ public class AbeilleAvecModele extends Abeille {
     public AbeilleAvecModele(Environnement environnement,int x, int y, int capaciteNectarPriseMax ,Ruche ruche) {
         super(x, y,capaciteNectarPriseMax,ruche);
         this.environnement=environnement;
-        environnement.set_Abeille_Avec_Modèle_Par_Défaults(x, y, true);
+        //environnement.set_Abeille_Avec_Modèle_Par_Défaults(x, y, true);
         
+    }
+    //Ce constructeur sera utile pour les tests
+    public AbeilleAvecModele(int capaciteNectarPriseMaximale )
+    {
+         this(null,1, 1, capaciteNectarPriseMaximale, null);
     }
 
     public void collecterNectar(Fleur fleur) {
