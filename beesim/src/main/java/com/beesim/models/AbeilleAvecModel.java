@@ -64,19 +64,23 @@ public class AbeilleAvecModel extends Abeille {
     /**
      * Recherche du nectar dans la zone attribuée à l'abeille.
      */
-    public void rechercherNectar(int tailleGrille, boolean partieSuperieure) {
-        int limite = tailleGrille / 2;
-        Environnement environnement = getEnvironnement(); // Récupère l'environnement depuis la classe parent
+    @Override
+    public void rechercherNectar(int rows, int cols, boolean partieSuperieure) {
+        int limiteLignes = rows / 2; // Division horizontale
+        int limiteColonnes = cols / 2; // Division verticale (utile pour plus tard)
+
+        Environnement environnement = getEnvironnement(); // Récupère l'environnement
 
         if (environnement == null) {
             System.out.println("Erreur : aucun environnement associé à l'abeille.");
             return;
         }
 
-        // Déplacement dans la grille selon la zone attribuée
+        // Déplacement selon la partie assignée
         if (partieSuperieure) {
-            for (int i = 0; i < limite; i++) {
-                for (int j = 0; j < tailleGrille; j++) {
+            // Partie supérieure de la grille
+            for (int i = 0; i < limiteLignes; i++) {
+                for (int j = 0; j < cols; j++) {
                     seDeplacerVers(i, j);
                     Fleur fleur = environnement.environnementSimule(i, j);
                     if (fleur != null && fleur.getNectar() > 0) {
@@ -86,8 +90,9 @@ public class AbeilleAvecModel extends Abeille {
                 }
             }
         } else {
-            for (int i = limite; i < tailleGrille; i++) {
-                for (int j = tailleGrille - 1; j >= 0; j--) {
+            // Partie inférieure de la grille
+            for (int i = limiteLignes; i < rows; i++) {
+                for (int j = cols - 1; j >= 0; j--) {
                     seDeplacerVers(i, j);
                     Fleur fleur = environnement.environnementSimule(i, j);
                     if (fleur != null && fleur.getNectar() > 0) {
@@ -97,7 +102,11 @@ public class AbeilleAvecModel extends Abeille {
                 }
             }
         }
-        setEtatActuel(new RetourRuche()); // Change l'état après la recherche
+
+        // Vérifier si toutes les fleurs ont été explorées
+        if (environnement.toutesFleursExplorees()) {
+            setEtatActuel(new RetourRuche()); // Retour à la ruche
+        }
     }
 
     /**

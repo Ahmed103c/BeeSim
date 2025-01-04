@@ -57,6 +57,7 @@ public abstract class Abeille {
     }
     public abstract Fleur choisirFleur();
     public abstract Fleur choisirFleurPourCollecte();
+    public abstract void rechercherNectar(int rows,int cols, boolean reset); // Méthode abstraite
     public EtatAbeille getEtat()
     {
         return etatActuel;

@@ -37,6 +37,9 @@ public class Fleur {
     public boolean isOccupe() {
         return occupe;
     }
+    public void setOccupe(boolean occupe) {
+        this.occupe=occupe;
+    }
     public void reduireNectar(int quantite) {
         if (!occupe && quantite <= nectar) {
             this.nectar -= quantite;

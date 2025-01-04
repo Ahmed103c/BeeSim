@@ -12,7 +12,7 @@ public class RetourRuche implements EtatAbeille {
         ruche.ajouterNectar(abeille.getNectarTransporté());
         abeille.viderNectarTransporté();
 
-        abeille.setEtat(new CollecterNectar()); // Passe à l'état suivant
+        abeille.setEtatActuel(new CollecterNectar()); // Passe à l'état suivant
     }
 }
 

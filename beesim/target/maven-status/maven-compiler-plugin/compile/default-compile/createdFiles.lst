@@ -1,12 +1,2 @@
-com\beesim\State\EtatAbeille.class
-com\beesim\State\CollecterNectar.class
-com\beesim\models\AbeilleSansModele.class
-com\beesim\models\AbeilleCreation.class
-com\beesim\models\Environnement.class
-com\beesim\models\Ruche.class
-com\beesim\State\Repos.class
-com\beesim\Sim.class
-com\beesim\State\RetourRuche.class
-com\beesim\models\Abeille.class
-com\beesim\models\AbeilleAvecModele.class
-com\beesim\State\ChercherNectar.class
+com/beesim/models/AbeilleAvecModel.class
+com/beesim/models/simulationAvecModel.class

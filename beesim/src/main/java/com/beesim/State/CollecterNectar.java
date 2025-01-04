@@ -11,19 +11,20 @@ public class CollecterNectar implements EtatAbeille {
             abeille.seDeplacerVers(cible.getX(), cible.getY());
 
             // Collecter le nectar
-            int nectarCollecte = Math.min(cible.getNectar(), abeille.getCapaciteNectar());
-            cible.consommerNectar(nectarCollecte);
+            int nectarCollecte = Math.min(cible.getNectar(), abeille.getNectarTransporté());
+            cible.reduireNectar(nectarCollecte);
             abeille.ajouterNectarTransporté(nectarCollecte);
 
+            abeille.setEtatActuel(new RetourRuche());
             // Si l'énergie est basse, passe à l'état Repos
             if (abeille.getEnergie() <= 0) {
-                abeille.setEtat(new Repos());
+                abeille.setEtatActuel(new Repos());
             } else {
-                abeille.setEtat(new RetourRuche()); // Retourne à la ruche
+                abeille.setEtatActuel(new CollecterNectar()); // Retourne à la ruche
             }
         } else {
             System.out.println("Fleur vide ou introuvable !");
-            abeille.setEtat(new Repos());
+            abeille.setEtatActuel(new RetourRuche());
         }
     }
 }

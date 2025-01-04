@@ -4,8 +4,24 @@ import com.beesim.models.*;
 public class ChercherNectar implements EtatAbeille {
     @Override
     public void agir(Abeille abeille) {
-        System.out.println("Abeille en mode ChercherNectar.");
+        System.out.println("État : Recherche de nectar...");
 
+        abeille.rechercherNectar(abeille.getEnvironnement().getRows(),abeille.getEnvironnement().getRows(), true);
+
+        // Si l'énergie est faible, passer à l'état de repos
+        if (abeille.getEnergie() <= 0) {
+            abeille.setEtatActuel(new RetourRuche());
+            abeille.setEtatActuel(new Repos());
+            System.out.println("Énergie faible, l'abeille passe en repos.");
+            return;
+        }
+
+        // Si l'environnement est parcouru, retour à la ruche
+        if (abeille.getEnvironnement().toutesFleursExplorees()) {
+            abeille.setEtatActuel(new RetourRuche());
+            System.out.println("Toutes les fleurs explorées, retour à la ruche.");
+            //istanceof
+            abeille.setEtatActuel(new CollecterNectar());
+        }
     }
 }
-
