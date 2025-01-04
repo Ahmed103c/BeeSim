@@ -145,6 +145,10 @@ public class AbeilleAvecModele extends Abeille {
         }
     });
 }
+@Override
+    public void recevoirNotification(Fleur fleur) {
+        System.out.println("Abeille a la position: (" + getX()+","+getY() + ") a été notifiée que la fleur " + fleur.getX() + "," + fleur.getY() + " est vide.");
+    }
 
 } 
 
