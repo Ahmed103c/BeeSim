@@ -1,5 +1,8 @@
 package com.beesim.models;
+import com.beesim.State.ChercherNectar;
+import com.beesim.State.CollecterNectar;
 import com.beesim.State.EtatAbeille;
+import com.beesim.State.RetourRuche;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,12 +19,13 @@ public class AbeilleSansModele extends Abeille {
     private int x;
     private int y;
     private Environnement environnement;
-
+    private boolean isReturning = false;
    
     public AbeilleSansModele(Environnement environnement,int x, int y, int capaciteNectarPriseMax ,Ruche ruche) {
         super(x, y,capaciteNectarPriseMax,ruche);
         this.environnement=environnement;
         environnement.set_Abeille_Sans_Modèle_Par_Défaults(x, y, true);
+        
     }
 
     public void collecterNectar(Fleur fleur) {
@@ -39,13 +43,11 @@ public class AbeilleSansModele extends Abeille {
         }
     }
 
-    private boolean isReturning = false;
-
     public void deplacer() {
         if (isReturning) {
             return; // Si l'abeille est en train de retourner à la ruche, on ne fait rien
         }
-
+        setEtat(new ChercherNectar());
         Random random = new Random();
         int newX = x;
         int newY = y;
@@ -86,6 +88,7 @@ public class AbeilleSansModele extends Abeille {
                 System.out.println("Abeille est sur une fleur ");
                 Fleur fleur = environnement.getCell(x, y);
                 fleur.setOccupe(true);
+                setEtat(new CollecterNectar());
                 this.collecterNectar(fleur);
             }
 
@@ -96,6 +99,7 @@ public class AbeilleSansModele extends Abeille {
     }
 
     public void retournerAuRuche(Ruche ruche) {
+        setEtat(new RetourRuche());
         System.out.println("Abeille retourne à la ruche.");
         int rucheX = ruche.getPositionX(); // Coordonnées fixes de la ruche
         int rucheY = ruche.getPositionY();
