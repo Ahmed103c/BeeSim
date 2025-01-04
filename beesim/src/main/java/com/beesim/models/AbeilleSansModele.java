@@ -147,7 +147,7 @@ public class AbeilleSansModele extends Abeille {
         seDeplacerVers(0,0);
     }
     @Override
-    public void rechercherNectar(int taille,int m, boolean mk){
+    public void rechercherNectar(int taille,int m){
         System.out.println("ChercherNectar");
     }
 

@@ -61,13 +61,13 @@ public class simulationAvecModel extends Application {
          *
          ************************************************************************/
         // Création des abeilles
-        AbeilleAvecModel bee1 = new AbeilleAvecModel(2, 1, rucheAvecModele, grille); // Partie supérieure
-        AbeilleAvecModel bee2 = new AbeilleAvecModel(2, 2, rucheSansModele, grille); // Partie inférieure
+        AbeilleAvecModel bee1 = new AbeilleAvecModel(2, 1, rucheAvecModele, grille,0); // Partie supérieure
+        AbeilleAvecModel bee2 = new AbeilleAvecModel(2, 2, rucheSansModele, grille,1); // Partie inférieure
 
         // Simulation avec Timeline
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), event -> {
-            bee1.rechercherNectar(rows, cols, true); // Parcours de la partie supérieure
-            bee2.rechercherNectar(rows, cols, false); // Parcours de la partie inférieure
+            bee1.rechercherNectar(rows, cols); // Parcours de la partie supérieure
+            bee2.rechercherNectar(rows, cols); // Parcours de la partie inférieure
         }));
 
         timeline.setCycleCount(Timeline.INDEFINITE); // Boucle infinie pour simuler

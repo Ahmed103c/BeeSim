@@ -7,7 +7,6 @@ public class RetourRuche implements EtatAbeille {
         System.out.println("Abeille retourne à sa ruche.");
         Ruche ruche = abeille.getRuche();
         abeille.seDeplacerVers(ruche.getPositionX(), ruche.getPositionY());
-
         // Mise à jour du score ou du nectar stocké dans la ruche
         ruche.ajouterNectar(abeille.getNectarTransporté());
         abeille.viderNectarTransporté();

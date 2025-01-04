@@ -6,10 +6,22 @@ import java.util.*;
 public class AbeilleAvecModel extends Abeille {
     private static Map<String, Fleur> memoireCollective = new HashMap<>(); // Mémoire partagée entre abeilles avec modèle
     private Map<Fleur, Integer> modeleInterne; // Mémoire individuelle de l'abeille
+    private int id;
+    public AbeilleAvecModel(int x, int y, Ruche ruche, Environnement environnement,int id) {
+        super(x, y, ruche, environnement);
+        this.modeleInterne = new HashMap<>();
+        this.id = id;
 
+    }
     public AbeilleAvecModel(int x, int y, Ruche ruche, Environnement environnement) {
         super(x, y, ruche, environnement);
         this.modeleInterne = new HashMap<>();
+    }
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -65,7 +77,8 @@ public class AbeilleAvecModel extends Abeille {
      * Recherche du nectar dans la zone attribuée à l'abeille.
      */
     @Override
-    public void rechercherNectar(int rows, int cols, boolean partieSuperieure) {
+    public void rechercherNectar(int rows, int cols) {
+        boolean partieSuperieure=(id==0);
         int limiteLignes = rows / 2; // Division horizontale
         int limiteColonnes = cols / 2; // Division verticale (utile pour plus tard)
 
@@ -106,6 +119,7 @@ public class AbeilleAvecModel extends Abeille {
         // Vérifier si toutes les fleurs ont été explorées
         if (environnement.toutesFleursExplorees()) {
             setEtatActuel(new RetourRuche()); // Retour à la ruche
+            agir();
         }
     }
 
