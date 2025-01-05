@@ -1,4 +1,8 @@
-package com.beesim.models;
+package com.beesim.Factory;
+
+import com.beesim.models.AbeilleAvecModele;
+import com.beesim.models.Environnement;
+import com.beesim.models.Ruche;
 
 public class AbeilleAvecModeleFactory extends AbeilleFactory{
     @Override

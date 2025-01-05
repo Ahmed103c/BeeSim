@@ -1,4 +1,8 @@
-package com.beesim.models;
+package com.beesim.Factory;
+
+import com.beesim.models.Abeille;
+import com.beesim.models.Environnement;
+import com.beesim.models.Ruche;
 
 abstract class AbeilleFactory {
 

@@ -1,5 +1,7 @@
 package com.beesim;
 
+import com.beesim.Factory.AbeilleAvecModeleFactory;
+import com.beesim.Factory.AbeilleSansModeleFactory;
 import com.beesim.Mediateur.*;
 
 
