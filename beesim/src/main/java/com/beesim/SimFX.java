@@ -52,7 +52,7 @@ public class SimFX extends Application {
     introLayout.setAlignment(Pos.CENTER); 
     introLayout.getChildren().addAll(labelSansModele,startButton);
     Scene introScene = new Scene(introLayout, 450, 450);
-    primaryStage.setTitle("Introduction");
+    primaryStage.setTitle("Beesim.exe");
     primaryStage.setScene(introScene);
     primaryStage.show();
 
@@ -60,7 +60,7 @@ public class SimFX extends Application {
 
     private void afficherSceneSimulation(Stage primaryStage)
     {
-              /************************************************************************
+        /************************************************************************
          * 
          * 
          * 
@@ -176,7 +176,7 @@ public class SimFX extends Application {
 
         
         Scene scene = new Scene(layout, 450,450);
-        primaryStage.setTitle("Simulation d'abeille 2D");
+        primaryStage.setTitle("Beesim.exe");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -216,7 +216,7 @@ public class SimFX extends Application {
         scoreScene.setFill(Color.LIGHTYELLOW); 
 
       
-        primaryStage.setTitle("Scores finaux");
+        primaryStage.setTitle("Beesim.exe");
         primaryStage.setScene(scoreScene);
     }
 
