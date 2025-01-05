@@ -1,30 +1,24 @@
-# BeeSim - Simulation Multi Agents d'Abeilles
+# 🐝 🐝 BeeSim - Simulation Multi Agents d'Abeilles 🐝 🐝
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-## Aperçu
+## Description 📜​ 
+
+BeeSim est une simulation 2D représentant le comportement des abeilles dans un environnement Dynamique avec des ruches et des fleurs. Ce projet a pour but de démontrer l'interaction entre les abeilles, les fleurs et les ruches, en mettant en œuvre des concepts comme le déplacement des abeilles, la collecte de nectar et la gestion des ruches.
+
+## Aperçu 👀​
 
 https://github.com/user-attachments/assets/46bae19f-ae34-4471-867b-04fcc184ad40
 
-## Technologies utilisées
 
-- **Java** : Langage principal pour la simulation.
-- **JavaFX** : Utilisé pour l'interface graphique 2D.
-- **JUnit** : Pour les tests unitaires.
-- 
-## Description
-
-BeeSim est une simulation 2D représentant le comportement des abeilles dans un environnement avec des ruches et des fleurs. Ce projet a pour but de démontrer l'interaction entre les abeilles, les fleurs et les ruches, en mettant en œuvre des concepts comme le déplacement des abeilles, la collecte de nectar et la gestion des ruches.
-
-
-## Fonctionnalités
+## 🚀​ Fonctionnalités ​🚀​
 
 - **Création d'un environnement** : Un environnement composé de fleurs et de ruches.
 - **Déplacement des abeilles** : Les abeilles se déplacent dans l'environnement à la recherche de fleurs.
 - **Collecte de nectar** : Les abeilles collectent du nectar pour remplir les ruches.
 - **Gestion des ruches** : Les ruches stockent le nectar collecté par les abeilles.
   
- ## Architecture Logicielle 
+ ## 🔎​📒​ Architecture Logicielle 🔎​📒​
  Le projet utilise plusieurs techniques de conception logicielle, illustrées par l'implémentation de trois patterns principaux, modélisés dans un diagramme UML :
 
 - **Factory Pattern** : Permet de créer des objets (par exemple, des abeilles) sans avoir à spécifier la classe exacte de l'objet à créer.
@@ -42,14 +36,22 @@ BeeSim est une simulation 2D représentant le comportement des abeilles dans un 
 Ces patterns de conception aident à organiser et structurer le code, rendant l'application plus flexible et plus facile à maintenir.
 
 
-## Prérequis
+## Prérequis 🔎​
 
 Pour exécuter ce projet, vous devez avoir installé les outils suivants sur votre machine :
 
 - **Java 17+** : Pour compiler et exécuter l'application.
 - **Maven** : Pour gérer les dépendances et les tests.
 
-## Installation
+
+## Technologies utilisées 🖥️​
+
+- **Java** : Langage principal pour la simulation.
+- **JavaFX** : Utilisé pour l'interface graphique 2D.
+- **JUnit** : Pour les tests unitaires.
+
+  
+## Installation ⏳​ 
 
 1. **Clonez le projet** :
    ```bash
@@ -70,7 +72,7 @@ Pour exécuter ce projet, vous devez avoir installé les outils suivants sur vot
 2. Les ruches sont visibles sur la grille, et les abeilles se déplacent pour collecter du nectar et le déposer dans les ruches.
 3. Vous pouvez voir l'interaction en temps réel entre les abeilles, les fleurs et les ruches.
 
-## Tests 
+## Tests  ✅​ 
 Des tests unitaires ont été implémentés pour vérifier le bon fonctionnement de certaines fonctionnalités :
 
 Test de déplacement des abeilles.
@@ -81,3 +83,4 @@ Test de gestion des ruches.
 **test unitaire** :
     ```bash
     mvn test
+    ```
