@@ -8,8 +8,11 @@ BeeSim est une simulation 2D représentant le comportement des abeilles dans un 
 
 ## Aperçu 👀​
 
-https://github.com/user-attachments/assets/46bae19f-ae34-4471-867b-04fcc184ad40
+[https://github.com/user-attachments/assets/46bae19f-ae34-4471-867b-04fcc184ad40](https://github.com/user-attachments/assets/ca15c75e-5fcf-4580-97bc-c5e5087a70f2)
 
+Les messages dans le terminal : 
+
+![msgTerminale](https://github.com/user-attachments/assets/d0bef1cd-b5ef-4db7-8626-fbc4e0edf578)
 
 ## 🚀​ Fonctionnalités ​🚀​
 
