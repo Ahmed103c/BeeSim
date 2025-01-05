@@ -1,5 +1,6 @@
 package com.beesim;
 
+import com.beesim.Mediateur.*;
 
 
 import com.beesim.models.*;
@@ -27,7 +28,8 @@ public class SimFX extends Application {
         int rows = 10;
         int cols = 10;        
         GridPane gridPane = new GridPane();
-        Environnement grille = new Environnement(rows, cols, gridPane);
+        beeMediator mediateur = new beeMediator();
+        Environnement grille = new Environnement(rows, cols, gridPane,mediateur);
         /************************************************************************
          * 
          * 
@@ -39,6 +41,9 @@ public class SimFX extends Application {
          * 
          ************************************************************************/
         grille.DessinerFleur();
+        for (Fleur fleur : grille.getFleurs()) {
+            fleur.setMediateur(mediateur); // Associe chaque fleur au médiateur
+        }
         /************************************************************************
          * 
          * 

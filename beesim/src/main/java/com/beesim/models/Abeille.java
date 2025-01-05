@@ -45,6 +45,18 @@ public abstract  class Abeille {
     public Ruche getRuche() {
         return ruche;
     }
-
+   public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+    public void setX(int x) {
+        this.x = x;
+    }
+    public void setY(int y) {
+        this.y = y;
+    }
+    public abstract void recevoirNotification(Fleur fleur);
 
 }

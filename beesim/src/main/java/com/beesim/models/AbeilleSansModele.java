@@ -133,6 +133,10 @@ public class AbeilleSansModele extends Abeille {
         timeline.getKeyFrames().add(keyFrame);
         timeline.play(); // Démarrer l'animation
     }
+    @Override
+    public void recevoirNotification(Fleur fleur) {
+        System.out.println("Abeille a la position: (" + getX()+","+getY() + ") a été notifiée que la fleur " + fleur.getX() + "," + fleur.getY() + " est vide.");
+    }
 
 
 }

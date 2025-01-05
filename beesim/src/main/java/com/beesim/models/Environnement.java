@@ -1,4 +1,7 @@
 package com.beesim.models;
+
+import com.beesim.Mediateur.*;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,8 +21,10 @@ public class Environnement {
     private Fleur[][] matriceFleur;
     private List<Fleur> fleurs;
     private List<Ruche> ruches;
+    private beeMediator mediateurr;
 
-    public Environnement(int rows, int cols, GridPane gridPane) 
+
+    public Environnement(int rows, int cols, GridPane gridPane,beeMediator mediateur)
     {
         this.rows = rows;
         this.cols = cols;
@@ -27,6 +32,7 @@ public class Environnement {
         this.matriceFleur = new Fleur[rows+1][cols+1];
         this.fleurs=new ArrayList<>();
         this.ruches=new ArrayList<>();
+        this.mediateurr=mediateur;
         initialiserRuches();
         // Initialisation des cellules de la grille :
         for (int i = 0; i < rows; i++) {
@@ -107,6 +113,7 @@ public class Environnement {
         for (Fleur fleur : fleurs) {
             System.out.println("Fleur ajoutée en : (" + fleur.getX() + ", " + fleur.getY() + ")");
             this.set_Couleur_Fleur_Par_Défault(fleur.getX(), fleur.getY(), true);
+            fleur.setMediateur(mediateurr);
         }
     }   
     public List<Fleur> getFleursFixes(){
