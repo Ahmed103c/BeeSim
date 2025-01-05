@@ -38,8 +38,8 @@ public class AbeilleSansModele extends Abeille {
             this.capaciteNectarPrise += nectarCollecte; 
             fleur.reduireNectar(nectarCollecte);
 
-            System.out.println("Nectar collecté : " + nectarCollecte);
-            System.out.println("Capacité actuelle : " + this.capaciteNectarPrise + "/" + this.getCapaciteNectarPriseMaximale());
+            //System.out.println("Nectar collecté : " + nectarCollecte);
+            //System.out.println("Capacité actuelle : " + this.capaciteNectarPrise + "/" + this.getCapaciteNectarPriseMaximale());
         } else {
             System.out.println("Abeille pleine ! Aucun nectar supplémentaire collecté.");
         }
@@ -49,7 +49,7 @@ public class AbeilleSansModele extends Abeille {
         if (isReturning) {
             return; // Si l'abeille est en train de retourner à la ruche, on ne fait rien
         }
-        setEtat(new ChercherNectar());
+        setEtat(new ChercherNectar(this));
         Random random = new Random();
         int newX = x;
         int newY = y;
@@ -87,10 +87,10 @@ public class AbeilleSansModele extends Abeille {
             y = newY;
 
             if (environnement.getCellBool(x, y)) {
-                System.out.println("Abeille est sur une fleur ");
+                //System.out.println("Abeille est sur une fleur ");
                 Fleur fleur = environnement.getCell(x, y);
                 fleur.setOccupe(true);
-                setEtat(new CollecterNectar());
+                setEtat(new CollecterNectar(this));
                 this.collecterNectar(fleur);
             }
 
@@ -101,8 +101,8 @@ public class AbeilleSansModele extends Abeille {
     }
 
     public void retournerAuRuche(Ruche ruche) {
-        setEtat(new RetourRuche());
-        System.out.println("Abeille retourne à la ruche.");
+        setEtat(new RetourRuche(this));
+        //System.out.println("Abeille retourne à la ruche.");
         int rucheX = ruche.getPositionX(); // Coordonnées fixes de la ruche
         int rucheY = ruche.getPositionY();
 

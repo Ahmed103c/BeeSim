@@ -9,6 +9,7 @@ public abstract  class Abeille {
     protected int capaciteNectarPriseMaximale;
     protected Ruche ruche;   
     protected EtatAbeille etatActuel;
+
     
 
     public Abeille(int x, int y ,int  capaciteNectarPriseMaximale ,Ruche ruche) {
@@ -17,7 +18,7 @@ public abstract  class Abeille {
         this.capaciteNectarPriseMaximale = capaciteNectarPriseMaximale;
         this.capaciteNectarPrise=0;
         this.ruche = ruche;
-        this.etatActuel=new ChercherNectar();
+        this.etatActuel=new ChercherNectar(this);
     }
     public Abeille(int capaciteNectarPriseMaximale )
     {

@@ -12,6 +12,7 @@ public class AbeilleAvecModele extends Abeille {
     private int y;
     private Environnement environnement;
     private boolean isgoing = false;
+
    
     public AbeilleAvecModele(Environnement environnement,int x, int y, int capaciteNectarPriseMax ,Ruche ruche) {
         super(x, y,capaciteNectarPriseMax,ruche);
@@ -33,8 +34,8 @@ public class AbeilleAvecModele extends Abeille {
             this.capaciteNectarPrise += nectarCollecte; 
             fleur.reduireNectar(nectarCollecte);
 
-            System.out.println("Nectar collecté : " + nectarCollecte);
-            System.out.println("Capacité actuelle : " + this.capaciteNectarPrise + "/" + this.getCapaciteNectarPriseMaximale());
+            //System.out.println("Nectar collecté : " + nectarCollecte);
+            //System.out.println("Capacité actuelle : " + this.capaciteNectarPrise + "/" + this.getCapaciteNectarPriseMaximale());
         } else {
             System.out.println("Abeille pleine ! Aucun nectar supplémentaire collecté.");
         }
@@ -42,7 +43,7 @@ public class AbeilleAvecModele extends Abeille {
 
     public void retournerAuRuche(Ruche ruche) {
     System.out.println("Abeille retourne à la ruche.");
-    setEtat(new RetourRuche());
+    setEtat(new RetourRuche(this));
     int rucheX = ruche.getPositionX(); // Coordonnées fixes de la ruche
     int rucheY = ruche.getPositionY();
 
@@ -118,7 +119,7 @@ public class AbeilleAvecModele extends Abeille {
     if (isgoing) {
         return; // Empêche le déplacement si une animation est déjà en cours
     }
-    setEtat(new ChercherNectar());
+    setEtat(new ChercherNectar(this));
     Random random = new Random();
     List<Fleur> fleurs = environnement.getFleursFixes();
 
@@ -132,7 +133,7 @@ public class AbeilleAvecModele extends Abeille {
 
     deplacerVersCible(fleurCible.getX(), fleurCible.getY(), () -> {
         System.out.println("Abeille a atteint la fleur : (" + fleurCible.getX() + ", " + fleurCible.getY() + ")");
-        setEtat(new CollecterNectar());
+        setEtat(new CollecterNectar(this));
         this.collecterNectar(fleurCible);
 
         // Vérifie si l'abeille doit retourner à la ruche
