@@ -248,7 +248,7 @@ public class Environnement {
         }
     }
 
-       public void mettreAJourCellule_AbeilleAvecModele(int x, int y, boolean occupe)
+    public void mettreAJourCellule_AbeilleAvecModele(int x, int y, boolean occupe)
     {
         
         if (x >=0 && x < rows && y >=0 && y < cols) {
