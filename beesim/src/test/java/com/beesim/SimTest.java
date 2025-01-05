@@ -62,7 +62,7 @@ public class SimTest
 
     @Test
     public void testEnvironnementCreation() {
-    Environnement grille = new Environnement(10, 10, new GridPane());
+    Environnement grille = new Environnement(10, 10, new GridPane(),null);
     //grille.DessinerFleur();
     assertNotNull( "Les fleurs devraient être créées",grille.getFleurs());
     assertTrue("Il devrait y avoir des fleurs dans l'environnement",grille.getFleurs().size() > 0 );
