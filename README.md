@@ -58,6 +58,7 @@ Test de déplacement des abeilles.
 Test de collecte de nectar.
 Test de gestion des ruches.
 
-Pour exécuter les tests unitaires, utilisez la commande suivante :
+
+**test unitaire** :
     ```bash
     mvn test
