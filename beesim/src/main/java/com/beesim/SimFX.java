@@ -72,19 +72,26 @@ public class SimFX extends Application {
         
         
         AbeilleSansModeleFactory abeilleSansModelFactory = new AbeilleSansModeleFactory();
-        AbeilleSansModele abeilleTest =abeilleSansModelFactory.creerAbeille(grille,2,1,20,rucheSansModele);
+        AbeilleSansModele abeillesansmodele_1 =abeilleSansModelFactory.creerAbeille(grille,2,1,20,rucheSansModele);
+        AbeilleSansModele abeillesansmodele_2 =abeilleSansModelFactory.creerAbeille(grille,3,1,20,rucheSansModele);
+        AbeilleSansModele abeillesansmodele_3 =abeilleSansModelFactory.creerAbeille(grille,4,1,20,rucheSansModele);
 
 
 
         AbeilleAvecModeleFactory abeilleAvecModelFactory = new AbeilleAvecModeleFactory();
-        AbeilleAvecModele abeilleTest2 =abeilleAvecModelFactory.creerAbeille(grille,15,15,20,rucheAvecModele);
-        
-
+        AbeilleAvecModele abeilleavecmodele_1 =abeilleAvecModelFactory.creerAbeille(grille,15,15,20,rucheAvecModele);
+        AbeilleAvecModele abeilleavecmodele_2 =abeilleAvecModelFactory.creerAbeille(grille,15,15,20,rucheAvecModele);
+        AbeilleAvecModele abeilleavecmodele_3 =abeilleAvecModelFactory.creerAbeille(grille,15,15,20,rucheAvecModele);
    
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), event -> {
             
-            abeilleTest.deplacer();
-            abeilleTest2.deplacerVersFleur();
+            abeillesansmodele_1.deplacer();
+            abeillesansmodele_2.deplacer();
+            abeillesansmodele_3.deplacer();
+            abeilleavecmodele_1.deplacerVersFleur();
+            abeilleavecmodele_2.deplacerVersFleur();
+            abeilleavecmodele_3.deplacerVersFleur();
+
             //System.out.println("Quantité Nectar dans Ruche : "+rucheAvecModele.getScore());
             //System.out.println("Quantité Nectar dans Ruche : "+rucheSansModele.getScore());
 
