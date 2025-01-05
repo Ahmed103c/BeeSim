@@ -2,6 +2,10 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
+## Aperçu
+
+https://github.com/user-attachments/assets/46bae19f-ae34-4471-867b-04fcc184ad40
+
 ## Description
 
 BeeSim est une simulation 2D représentant le comportement des abeilles dans un environnement avec des ruches et des fleurs. Ce projet a pour but de démontrer l'interaction entre les abeilles, les fleurs et les ruches, en mettant en œuvre des concepts comme le déplacement des abeilles, la collecte de nectar et la gestion des ruches.
