@@ -4,7 +4,7 @@
 
 ## Description 📜​ 
 
-BeeSim est une simulation 2D représentant le comportement des abeilles dans un environnement Dynamique avec des ruches et des fleurs. Ce projet a pour but de démontrer l'interaction entre les abeilles, les fleurs et les ruches, en mettant en œuvre des concepts comme le déplacement des abeilles, la collecte de nectar et la gestion des ruches.
+BeeSim est une simulation 2D représentant le comportement des abeilles dans un environnement dynamique comprenant des ruches et des fleurs. Ce projet a pour but de simuler la compétition entre deux types d'abeilles en mettant en œuvre des concepts comme le déplacement des abeilles, la collecte de nectar et la gestion des ruches, tout en illustrant leurs interactions avec les fleurs et les ruches.
 
 ## Aperçu 👀​
 
